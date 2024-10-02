@@ -15,7 +15,7 @@ TagManager:
   - UI
   - ground
   - NPC
-  - 
+  - wall
   - 
   - 
   - 
@@ -49,6 +49,12 @@ TagManager:
   - name: platform
     uniqueID: 413259027
     locked: 0
+  - name: lv1
+    uniqueID: 1456660469
+    locked: 0
+  - name: lv2
+    uniqueID: 2664633263
+    locked: 0
   - name: NPC
     uniqueID: 1159225299
     locked: 0
@@ -57,4 +63,7 @@ TagManager:
     locked: 0
   - name: icontool
     uniqueID: 2110156627
+    locked: 0
+  - name: lv3
+    uniqueID: 1480320129
     locked: 0
