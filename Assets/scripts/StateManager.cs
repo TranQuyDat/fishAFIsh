@@ -1,40 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 public enum StateTyle
 {
-    idle , swim , eat
+    idle , swim , eat , jump , 
 }
 public class StateManager : MonoBehaviour
 {
-    public float speed;
-    IState curState;
     public static StateTyle stateTyle;
-    bool isChangeState = false;
+    public StateTyle displayState;
+    public static bool isLoop;
+
+    static IState curState;
+    public float speed;
 
     // Update is called once per frame
     void Update()
     {
 
-        if (curState == null || isChangeState == false) return;
-        isChangeState = false;
-       
+        if (curState == null  ) return;
+        displayState = stateTyle;
         curState.Execute();
 
     }
-
-    public void changeState(IState newState)
+    
+    public static void changeState(IState newState , bool isloop = true)
     {
         if (curState != null) curState.Exit();
         curState = newState;
         curState.Enter();
-        isChangeState = true;
+        isLoop = isloop;
     }
 
-    public void RepeatState()
-    {
-        curState.Execute();
-    }
+
+
     public void stopState()
     {
         curState.Exit();
