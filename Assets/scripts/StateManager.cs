@@ -4,13 +4,12 @@ using UnityEngine;
 using UnityEngine.UIElements;
 public enum StateTyle
 {
-    idle , swim , eat , jump , 
+    swim , eat , jump , 
 }
 public class StateManager : MonoBehaviour
 {
     public static StateTyle stateTyle;
     public StateTyle displayState;
-    public static bool isLoop;
 
     static IState curState;
     public float speed;
@@ -25,12 +24,11 @@ public class StateManager : MonoBehaviour
 
     }
     
-    public static void changeState(IState newState , bool isloop = true)
+    public static void changeState(IState newState)
     {
         if (curState != null) curState.Exit();
         curState = newState;
         curState.Enter();
-        isLoop = isloop;
     }
 
 

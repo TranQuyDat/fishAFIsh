@@ -33,20 +33,19 @@ public class SwimState : IState
             StateManager.changeState(new JumpState(rb, player));
             return;
         }
-
+        //dk chuyen sang eat
+        if (player.food != null)
+        {
+            StateManager.changeState(new EatState(rb, player));
+            return;
+        }
         //hd swim
         Vector3 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) ;
 
         Vector2 dir = (cursorPos - rb.transform.position).normalized;
-        dir = Vector2.ClampMagnitude(dir, 1f);
-        Debug.Log(dir);
-        rb.position += dir * speed * Time.deltaTime;
-        //rb.position = Vector2.Lerp(rb.position, cursorPos, speed * Time.deltaTime); ;
-        float dis = dir.magnitude;
+        rb.position +=  dir * speed * Time.deltaTime;
         
-        // dk chuyen sang Idle
-        if (dis > 0.3f) return;
-        StateManager.changeState(new IdleState(rb, player));
+
 
     }
 

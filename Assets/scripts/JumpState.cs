@@ -25,13 +25,13 @@ public class JumpState : IState
         //dk de chuyen sang swim
         if(rb.transform.position.y < (surFaceSea.position.y - 1f))
         {
-            StateManager.changeState(new IdleState(rb,player));
+            StateManager.changeState(new SwimState(rb,player));
             return;
         }
 
         //hd jump
         if (isJump) return;
-        Debug.Log("jump");
+        //Debug.Log("jump");
         Vector2 dir = (Vector2.up + Vector2.right * rb.transform.localScale.x).normalized ;
         rb.AddForce(dir, ForceMode2D.Impulse);
         isJump = true;
@@ -39,7 +39,7 @@ public class JumpState : IState
 
     public void Exit()
     {
-        Debug.Log("stop jump");
+        //Debug.Log("stop jump");
         isJump = false;
     }
 }
