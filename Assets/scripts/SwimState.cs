@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SwimState : IState
@@ -28,7 +29,7 @@ public class SwimState : IState
     public void Execute()
     {
         //dk chuyen sang jump
-        if(rb.transform.position.y > (surFaceSea.position.y + 1f))
+        if(rb.transform.position.y > (surFaceSea.position.y +0.35f ))
         {
             StateManager.changeState(new JumpState(rb, player));
             return;
@@ -43,12 +44,12 @@ public class SwimState : IState
         Vector3 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) ;
 
         Vector2 dir = (cursorPos - rb.transform.position).normalized;
-        rb.position +=  dir * speed * Time.deltaTime;
+        rb.position +=  dir * (5+speed) * Time.deltaTime;
         
 
 
     }
-
+    
     public void Exit()
     {
         ani.SetBool("isSwim", false);

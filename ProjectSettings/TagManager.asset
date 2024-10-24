@@ -49,11 +49,8 @@ TagManager:
   - name: platform
     uniqueID: 413259027
     locked: 0
-  - name: lv1
+  - name: lv
     uniqueID: 1456660469
-    locked: 0
-  - name: lv2
-    uniqueID: 2664633263
     locked: 0
   - name: NPC
     uniqueID: 1159225299
@@ -64,6 +61,9 @@ TagManager:
   - name: icontool
     uniqueID: 2110156627
     locked: 0
-  - name: lv3
-    uniqueID: 1480320129
+  - name: lv2
+    uniqueID: 910283127
+    locked: 0
+  - name: waterFX
+    uniqueID: 633534797
     locked: 0

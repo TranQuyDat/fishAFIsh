@@ -12,7 +12,6 @@ public class JumpState : IState
     {
         this.player = player;
         this.rb = rb;
-        this.surFaceSea = player.surFaceSea;
     }
 
     public void Enter()
@@ -22,8 +21,9 @@ public class JumpState : IState
 
     public void Execute()
     {
+        this.surFaceSea = player.surFaceSea;
         //dk de chuyen sang swim
-        if(rb.transform.position.y < (surFaceSea.position.y - 1f))
+        if (rb.transform.position.y < (surFaceSea.position.y - 0.5f))
         {
             StateManager.changeState(new SwimState(rb,player));
             return;

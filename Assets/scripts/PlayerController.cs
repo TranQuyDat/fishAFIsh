@@ -71,11 +71,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public float disyJump;
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(headPos.position, headRadius);
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(this.transform.position, cursorPos);
+
+        Gizmos.color = Color.red;
+        Vector2 v = surFaceSea.position;
+        v.y = surFaceSea.position.y+ disyJump;
+        Gizmos.DrawRay(new Ray(v, Vector2.right));
+        Gizmos.DrawRay(new Ray(v, Vector2.left)); 
+        
+        v.y = surFaceSea.position.y-disyJump;
+        Gizmos.DrawRay(new Ray(v, Vector2.right));
+        Gizmos.DrawRay(new Ray(v, Vector2.left));
+
     }
 }
