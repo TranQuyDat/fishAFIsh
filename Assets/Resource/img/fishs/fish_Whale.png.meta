@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e2a2b6a00ee75c045915f877fc5494a1
+guid: de5ddf1d86d317e499e3f2a615fe768f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -45,10 +45,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 60
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -71,7 +71,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -97,211 +97,190 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sea_0
+      name: fish_Whale_0
       rect:
         serializedVersion: 2
-        x: 85
-        y: 471
-        width: 480
-        height: 16
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b13e54deefd03f74d9f6549cbc5ee93f
-      internalID: -818400709
+      spriteID: a751199e43c790b47ba130b84f9d4776
+      internalID: 1149251281
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sea_1
+      name: fish_Whale_1
       rect:
         serializedVersion: 2
-        x: 645
-        y: 471
-        width: 128
-        height: 64
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9fb4136eb380ae94ca59020ac865c32d
-      internalID: -1065387602
+      spriteID: 3ecd995a293d86a46a9558e5227c609c
+      internalID: -860461591
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sea_2
+      name: fish_Whale_2
       rect:
         serializedVersion: 2
-        x: 85
-        y: 447
-        width: 480
-        height: 17
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0aa969660fcf80147aea196f67574a4c
-      internalID: -649241027
+      spriteID: c315375201b02634da767cbc95b62c71
+      internalID: 50365716
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sea_3
+      name: fish_Whale_3
       rect:
         serializedVersion: 2
-        x: 645
-        y: 391
-        width: 128
-        height: 65
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0cb9b757b1414f499c8673d7ac52b7e
-      internalID: 2005400830
+      spriteID: e977730a5f89ba04ebacb4e0d6c89bb6
+      internalID: -13739848
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sea_4
+      name: fish_Whale_4
       rect:
         serializedVersion: 2
-        x: 85
-        y: 418
-        width: 480
-        height: 18
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41938ce990ab0b4498f82b12aa8cf629
-      internalID: 310141322
+      spriteID: 8b5bc15e0fc2e3a4bb7fa4beb5ad6020
+      internalID: -1294066100
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sea_5
+      name: fish_Whale_5
       rect:
         serializedVersion: 2
-        x: 85
-        y: 391
-        width: 480
-        height: 16
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 160
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 742943ec707203e46bb0ba7c38cf24f3
-      internalID: -1130324079
+      spriteID: ac8533af2fc64ae4c833982c572086cd
+      internalID: 1895198777
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sea_6
+      name: fish_Whale_6
       rect:
         serializedVersion: 2
-        x: 85
-        y: 365
-        width: 480
-        height: 19
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 192
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7cd973e86f8e8646be00a925eb2b5e0
-      internalID: -1919833057
+      spriteID: dda9b22ab0e7ae44fa5ee5071a24ac44
+      internalID: 768239680
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sea_7
+      name: fish_Whale_7
       rect:
         serializedVersion: 2
-        x: 644
-        y: 309
-        width: 129
-        height: 67
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
+        x: 224
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5d095222d415c194a9d5ea823b9cc8bd
-      internalID: 707899853
+      spriteID: 580787361ab7dcf4282aab4931733abe
+      internalID: 1489056617
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sea_8
+      name: fish_Whale_8
       rect:
         serializedVersion: 2
-        x: 83
-        y: 151
-        width: 480
-        height: 126
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 256
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4196acc1c280d9d43afb6d360b0a4496
-      internalID: 1536105119
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sea_9
-      rect:
-        serializedVersion: 2
-        x: 83
-        y: 47
-        width: 480
-        height: 89
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 537dfa5903efe454f86bbab963789242
-      internalID: 35016236
+      spriteID: 4138712e56160d04dae81922d0f07431
+      internalID: -391203891
       vertices: []
       indices: 
       edges: []
@@ -317,16 +296,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      sea_0: -818400709
-      sea_1: -1065387602
-      sea_2: -649241027
-      sea_3: 2005400830
-      sea_4: 310141322
-      sea_5: -1130324079
-      sea_6: -1919833057
-      sea_7: 707899853
-      sea_8: 1536105119
-      sea_9: 35016236
+      fish_Whale_0: 1149251281
+      fish_Whale_1: -860461591
+      fish_Whale_2: 50365716
+      fish_Whale_3: -13739848
+      fish_Whale_4: -1294066100
+      fish_Whale_5: 1895198777
+      fish_Whale_6: 768239680
+      fish_Whale_7: 1489056617
+      fish_Whale_8: -391203891
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

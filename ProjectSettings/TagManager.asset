@@ -55,7 +55,7 @@ TagManager:
   - name: NPC
     uniqueID: 1159225299
     locked: 0
-  - name: charecter
+  - name: fishs
     uniqueID: 2885996675
     locked: 0
   - name: icontool

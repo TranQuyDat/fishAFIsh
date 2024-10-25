@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e2a2b6a00ee75c045915f877fc5494a1
+guid: 98795cb7fdd451a42a0f95dcff8c6224
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -37,18 +37,18 @@ TextureImporter:
     filterMode: 0
     aniso: 1
     mipBias: 0
-    wrapU: 1
-    wrapV: 1
-    wrapW: 1
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 60
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -71,7 +71,7 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -97,211 +97,253 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sea_0
+      name: fish_Nemo_0
       rect:
         serializedVersion: 2
-        x: 85
-        y: 471
-        width: 480
-        height: 16
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b13e54deefd03f74d9f6549cbc5ee93f
-      internalID: -818400709
+      spriteID: 76d04c4bc41cb9741968ae8219039979
+      internalID: 1374488643
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sea_1
+      name: fish_Nemo_1
       rect:
         serializedVersion: 2
-        x: 645
-        y: 471
-        width: 128
-        height: 64
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9fb4136eb380ae94ca59020ac865c32d
-      internalID: -1065387602
+      spriteID: 1c47023f2ab1f464782ad7f140aa5fae
+      internalID: -696364592
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sea_2
+      name: fish_Nemo_2
       rect:
         serializedVersion: 2
-        x: 85
-        y: 447
-        width: 480
-        height: 17
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0aa969660fcf80147aea196f67574a4c
-      internalID: -649241027
+      spriteID: 7d3b2614f948d984d916039fbe39f19b
+      internalID: -2034265394
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sea_3
+      name: fish_Nemo_3
       rect:
         serializedVersion: 2
-        x: 645
-        y: 391
-        width: 128
-        height: 65
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0cb9b757b1414f499c8673d7ac52b7e
-      internalID: 2005400830
+      spriteID: 23b5413373bff8c4b88f22af2c1ff386
+      internalID: -2004640856
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sea_4
+      name: fish_Nemo_4
       rect:
         serializedVersion: 2
-        x: 85
-        y: 418
-        width: 480
-        height: 18
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 41938ce990ab0b4498f82b12aa8cf629
-      internalID: 310141322
+      spriteID: d4fc34fbdee4b5c4e992af4c7a05c524
+      internalID: 266868357
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sea_5
+      name: fish_Nemo_5
       rect:
         serializedVersion: 2
-        x: 85
-        y: 391
-        width: 480
-        height: 16
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 160
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 742943ec707203e46bb0ba7c38cf24f3
-      internalID: -1130324079
+      spriteID: a22a678c73fe4714596c8e350edf98b1
+      internalID: -1286603308
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sea_6
+      name: fish_Nemo_6
       rect:
         serializedVersion: 2
-        x: 85
-        y: 365
-        width: 480
-        height: 19
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 192
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7cd973e86f8e8646be00a925eb2b5e0
-      internalID: -1919833057
+      spriteID: 9970f0bd876e6b342883af105131d382
+      internalID: -1039706422
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sea_7
+      name: fish_Nemo_7
       rect:
         serializedVersion: 2
-        x: 644
-        y: 309
-        width: 129
-        height: 67
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
+        x: 224
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5d095222d415c194a9d5ea823b9cc8bd
-      internalID: 707899853
+      spriteID: c493ba23d07bc9d428834523a6cf9c83
+      internalID: -1985569799
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sea_8
+      name: fish_Nemo_8
       rect:
         serializedVersion: 2
-        x: 83
-        y: 151
-        width: 480
-        height: 126
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 256
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4196acc1c280d9d43afb6d360b0a4496
-      internalID: 1536105119
+      spriteID: 4f38dd2acd8909c4d897d15335c90746
+      internalID: 417404162
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sea_9
+      name: fish_Nemo_9
       rect:
         serializedVersion: 2
-        x: 83
-        y: 47
-        width: 480
-        height: 89
-      alignment: 2
-      pivot: {x: 0.5, y: 1}
+        x: 288
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 537dfa5903efe454f86bbab963789242
-      internalID: 35016236
+      spriteID: bccb4015f62778e4292a280f8a76302f
+      internalID: 234872226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fish_Nemo_10
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c30ad8e8b4618be4ebb5fbe719a3d99a
+      internalID: -715950224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: fish_Nemo_11
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1ba51619e11dad489318db2a701d35a
+      internalID: 1819416319
       vertices: []
       indices: 
       edges: []
@@ -317,16 +359,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      sea_0: -818400709
-      sea_1: -1065387602
-      sea_2: -649241027
-      sea_3: 2005400830
-      sea_4: 310141322
-      sea_5: -1130324079
-      sea_6: -1919833057
-      sea_7: 707899853
-      sea_8: 1536105119
-      sea_9: 35016236
+      fish_Nemo_0: 1374488643
+      fish_Nemo_1: -696364592
+      fish_Nemo_10: -715950224
+      fish_Nemo_11: 1819416319
+      fish_Nemo_2: -2034265394
+      fish_Nemo_3: -2004640856
+      fish_Nemo_4: 266868357
+      fish_Nemo_5: -1286603308
+      fish_Nemo_6: -1039706422
+      fish_Nemo_7: -1985569799
+      fish_Nemo_8: 417404162
+      fish_Nemo_9: 234872226
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

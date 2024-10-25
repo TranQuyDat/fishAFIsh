@@ -11,36 +11,41 @@ SpriteAtlas:
     serializedVersion: 2
     textureSettings:
       serializedVersion: 2
-      anisoLevel: 1
+      anisoLevel: 0
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 0
-      filterMode: 1
-      generateMipMaps: 0
+      filterMode: 0
+      generateMipMaps: 1
       readable: 0
       crunchedCompression: 0
       sRGB: 1
     platformSettings: []
     packingSettings:
       serializedVersion: 2
-      padding: 4
+      padding: 8
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 1
       enableTightPacking: 1
-      enableAlphaDilation: 0
+      enableAlphaDilation: 1
     secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
-    - {fileID: 2800000, guid: e2a2b6a00ee75c045915f877fc5494a1, type: 3}
+    - {fileID: -1065387602, guid: e2a2b6a00ee75c045915f877fc5494a1, type: 3}
+    - {fileID: -649241027, guid: e2a2b6a00ee75c045915f877fc5494a1, type: 3}
+    - {fileID: 2005400830, guid: e2a2b6a00ee75c045915f877fc5494a1, type: 3}
+    - {fileID: 310141322, guid: e2a2b6a00ee75c045915f877fc5494a1, type: 3}
+    - {fileID: -1130324079, guid: e2a2b6a00ee75c045915f877fc5494a1, type: 3}
+    - {fileID: -1919833057, guid: e2a2b6a00ee75c045915f877fc5494a1, type: 3}
+    - {fileID: 707899853, guid: e2a2b6a00ee75c045915f877fc5494a1, type: 3}
+    - {fileID: 1536105119, guid: e2a2b6a00ee75c045915f877fc5494a1, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
     packedSpriteRenderDataKeys:
-    - e2a2b6a00ee75c045915f877fc5494a1: 35016236
     - e2a2b6a00ee75c045915f877fc5494a1: 1536105119
     - e2a2b6a00ee75c045915f877fc5494a1: -1065387602
-    - e2a2b6a00ee75c045915f877fc5494a1: -818400709
     - e2a2b6a00ee75c045915f877fc5494a1: 2005400830
     - e2a2b6a00ee75c045915f877fc5494a1: -649241027
     - e2a2b6a00ee75c045915f877fc5494a1: -1130324079
@@ -49,10 +54,8 @@ SpriteAtlas:
     - e2a2b6a00ee75c045915f877fc5494a1: -1919833057
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 35016236, guid: e2a2b6a00ee75c045915f877fc5494a1, type: 3}
   - {fileID: 1536105119, guid: e2a2b6a00ee75c045915f877fc5494a1, type: 3}
   - {fileID: -1065387602, guid: e2a2b6a00ee75c045915f877fc5494a1, type: 3}
-  - {fileID: -818400709, guid: e2a2b6a00ee75c045915f877fc5494a1, type: 3}
   - {fileID: 2005400830, guid: e2a2b6a00ee75c045915f877fc5494a1, type: 3}
   - {fileID: -649241027, guid: e2a2b6a00ee75c045915f877fc5494a1, type: 3}
   - {fileID: -1130324079, guid: e2a2b6a00ee75c045915f877fc5494a1, type: 3}
@@ -60,10 +63,8 @@ SpriteAtlas:
   - {fileID: 707899853, guid: e2a2b6a00ee75c045915f877fc5494a1, type: 3}
   - {fileID: -1919833057, guid: e2a2b6a00ee75c045915f877fc5494a1, type: 3}
   m_PackedSpriteNamesToIndex:
-  - sea_9
   - sea_8
   - sea_1
-  - sea_0
   - sea_3
   - sea_2
   - sea_5
