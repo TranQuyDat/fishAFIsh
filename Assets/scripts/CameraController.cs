@@ -25,9 +25,10 @@ public class CameraController : MonoBehaviour
         transform.position = nextPos; 
         
     }
-
+    public bool enGizmos = true;
     private void OnDrawGizmos()
     {
+        if (!enGizmos) return;
         Gizmos.color = Color.red;
         if (camPos == null) return;
         Gizmos.DrawWireCube(player.transform.position, sizefolow);
