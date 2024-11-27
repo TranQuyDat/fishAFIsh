@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 3803549223783620384}
   - component: {fileID: 1011562449030090886}
   - component: {fileID: 5118236687683835229}
-  m_Layer: 0
+  - component: {fileID: 4047223291665649589}
+  m_Layer: 9
   m_Name: fish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,13 +123,53 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ani: {fileID: 1011562449030090886}
   time: 2
-  food: {fileID: 0}
-  layerFood:
+  OtherFish: {fileID: 0}
+  wall: {fileID: 0}
+  layerEnemy:
     serializedVersion: 2
     m_Bits: 8
-  PosCheckFood: {fileID: 5866648659786779840}
-  radiusCheck: 0.14
+  layerWall:
+    serializedVersion: 2
+    m_Bits: 320
+  PosCheckEnemy: {fileID: 5866648659786779840}
+  radiusToEat: 0.14
+  radiusScanEnemy: 2.13
   isGizmos: 1
+--- !u!58 &4047223291665649589
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3431089250043959822}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &7830760097826082232
 GameObject:
   m_ObjectHideFlags: 0

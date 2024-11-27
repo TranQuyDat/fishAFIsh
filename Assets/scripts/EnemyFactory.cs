@@ -34,7 +34,7 @@ public class EnemyFactory : MonoBehaviour
               => new FishEnemy(dataFish,obj,enemyMngr),
             _ => null
         };
-        obj.GetComponent<EnemyController>().enemy = e;
+        obj.GetComponent<EnemyController>().enemyscript = e;
         return  e;
     }
 
