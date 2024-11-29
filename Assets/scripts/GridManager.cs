@@ -13,8 +13,8 @@ public class Node
 
     public Node parent;
 
-    public float Gcost = float.MaxValue;
-    public float Hcost = 0;
+    public int Gcost = 0;
+    public int Hcost = 0;
     public float Fcost { get { return Gcost + Hcost; } }
 
     public Node( Vector3 pos, (int,int) gridPos , bool isWalkable = true)
@@ -27,15 +27,26 @@ public class Node
 }
 public class GridManager : MonoBehaviour
 {
+    public static GridManager instance;
+
     public int height;
     public int width;
     public float cellsize;
 
     public Transform gridorigin;
-    public Node[,] grids;
+    public static Node[,] grids;
 
 
     int curW, curH;
+    private void Awake()
+    {
+        if(instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -63,15 +74,15 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public Node getNodeOfobj(Vector3 worldPosition)
+    public Node posToNode(Vector3 worldPosition)
     {
         if (grids == null) return null;
         // Chuyển từ world position sang grid position
         Vector3 localPosition = worldPosition - gridorigin.position;
 
         // Chuyển từ local position sang tọa độ lưới
-        int x = Mathf.FloorToInt(localPosition.x / cellsize);
-        int y = Mathf.FloorToInt(localPosition.y / cellsize);
+        int x = Mathf.RoundToInt(localPosition.x / cellsize);
+        int y = Mathf.RoundToInt(localPosition.y / cellsize);
         // Kiểm tra nếu các giá trị x, y không vượt quá kích thước của grid
         x = Mathf.Clamp(x, 0, width - 1);
         y = Mathf.Clamp(y, 0, height - 1);
@@ -83,21 +94,31 @@ public class GridManager : MonoBehaviour
     public Transform obj1;
     public Transform obj2;
     public bool istart = false;
+    public bool isGizmos = false;
     private void OnDrawGizmos()
     {
+        if (!isGizmos) return;
         PathFinding path = new PathFinding();
-        Node starNode = getNodeOfobj(obj1.transform.position);
-        Node target = getNodeOfobj(obj2.transform.position);
+        Node starNode = posToNode(obj1.transform.position);
+        Node target = posToNode(obj2.transform.position);
         if (istart)
         {
-            List<Node> pathfin = path.findPath(starNode, target, grids);
-            print(pathfin.Count);
-            if (pathfin == null || pathfin.Count <= 0) return;
-            foreach (Node n in pathfin)
+            List<Node> pathfin = path.findPath(starNode, target);
+            if (pathfin == null)
             {
-                if (n.parent == null) continue;
-                Gizmos.color = Color.green;
-                Gizmos.DrawCube(n.pos, Vector3.one * (cellsize - 0.1f));
+                print("not find way");
+            }
+            else
+            {
+                print(pathfin.Count);
+
+                if (pathfin == null || pathfin.Count <= 0) return;
+                foreach (Node n in pathfin)
+                {
+                    if (n.parent == null) continue;
+                    Gizmos.color = Color.green;
+                    Gizmos.DrawCube(n.pos, Vector3.one * (cellsize - 0.1f));
+                }
             }
         }
         if (grids == null || grids.Length <= 0) return;

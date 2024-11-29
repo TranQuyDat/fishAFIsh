@@ -10,11 +10,14 @@ public abstract class Enemy
     public GameObject enemyObj;
     public EnemyController enemyCtrl;
     public EnemyManager enemyMngr;
+
+    public PathFinding pathFinding;
     public void init(DataFish dataFish ,GameObject obj , EnemyManager enemyMngr)
     {
         _dataFish = dataFish;
         enemyObj = obj;
         enemyCtrl = obj.GetComponent<EnemyController>();
+        pathFinding = new PathFinding();
         this.enemyMngr = enemyMngr;
         cur_action = move;
     }
@@ -34,20 +37,26 @@ public abstract class Enemy
 
 public class FishEnemy  : Enemy 
 {
-    Vector3 dir;
-    Vector2 dirWall;
-    Vector3 dirFlee;
-    List<Vector2> dir_walls;
     Vector3 limit;
     Vector2 sizeLimit;
     Vector3 newPos;
     float timeDelay = 0;
+    Vector3 dir;
+
+    Node enemyNode ;
+    Node targetNode;
+    List<Node> listNode;
+    int index = 0;
     public FishEnemy (DataFish dataFish , GameObject obj, EnemyManager enemyMngr) 
     {
         base.init(dataFish , obj , enemyMngr);
         limit = enemyMngr.limit.position;
         sizeLimit = enemyMngr.sizeLimit;
-        newPos = changePos();
+
+        enemyNode = GridManager.instance.posToNode(enemyObj.transform.position);
+        targetNode = changePos();
+        listNode = pathFinding.findPath(enemyNode, targetNode);
+        newPos = listNode[index].pos;
     }
 
     public override void eat() 
@@ -65,20 +74,33 @@ public class FishEnemy  : Enemy
    
     public override void move()
     {
-        if ((enemyObj.transform.position - newPos).magnitude <= 1f)
+        bool isGo = (enemyObj.transform.position - newPos).magnitude <= 0.01f;
+        if ( isGo && index < listNode.Count -1)
         {
-            newPos = changePos();
+            index += 1;
+            enemyNode = listNode[index];
+            float j = Random.Range(-0.25f, 0.25f);
+            newPos = enemyNode.pos +new Vector3(j,j,0);
         }
+
+        if(isGo &&  index >= listNode.Count - 1)
+        {
+            index = 0;
+            targetNode = changePos();
+            listNode = pathFinding.findPath(enemyNode, targetNode);
+        }
+
         Debug.DrawLine(enemyObj.transform.position, newPos);
-        Vector3 pos = enemyObj.transform.position + _dataFish.speed * dir * Time.deltaTime;
+
+        dir = (newPos - enemyObj.transform.position).normalized;
+        Vector3 pos = enemyObj.transform.position + dir * _dataFish.speed * Time.deltaTime;
         flip();
         enemyObj.transform.position = pos;
-        dir_walls = DetectWallDirection();
         if (enemyCtrl.OtherFish == null) return;
 
         // dk chuyen sang flee
         timeDelay = 3f;
-        cur_action = flee;
+        //cur_action = flee;
         // dk chuyen sang chase
     }
 
@@ -90,22 +112,10 @@ public class FishEnemy  : Enemy
         if (enemyCtrl.OtherFish == null && timeDelay<=0f)
         {
             cur_action = move;
-            newPos = changePos();
+            //newPos = changePos();
             return;
         }
-        if (enemyCtrl.OtherFish != null)
-        {
-            dirFlee = (enemyObj.transform.position - enemyCtrl.OtherFish.transform.position).normalized;
-        }
-        dir_walls = DetectWallDirection();
-        RaycastHit2D hit = Physics2D.Raycast(enemyObj.transform.position, dir,enemyCtrl.radiusScanEnemy,enemyCtrl.layerWall);
-        if(hit)
-        {
-            dirFlee += (Vector3)Vector2.Perpendicular(dirFlee)+(Vector3)dirWall;
-        }
-        //Debug.Log(dirFlee +" - "+ dirWall +" = "+dir);
-
-        dir = dirFlee;
+        
 
         flip();
         enemyObj.transform.position += dir.normalized * _dataFish.speed*3f * Time.deltaTime;
@@ -128,7 +138,7 @@ public class FishEnemy  : Enemy
         
         // dk chuyen sang move
         cur_action = move;
-        newPos = changePos();
+        //newPos = changePos();
     }
 
     //sub method 
@@ -149,45 +159,20 @@ public class FishEnemy  : Enemy
             enemyObj.transform.localScale = scale;
         }
     }
-    public Vector2 changePos()
+    public Node changePos()
     {
-        Vector3 pos = new Vector3();
-        pos.x = Random.Range(limit.x - (sizeLimit.x/2), limit.x + (sizeLimit.x/2));
-        pos.y = Random.Range(limit.y - (sizeLimit.y/2), limit.y + (sizeLimit.y/2));
-        dir = (pos - enemyObj.transform.position).normalized;
-        return pos;
-    }
-    public List<Vector2> DetectWallDirection()
-    {
-        List<Vector2> dir = new List<Vector2>();
-        Vector3 pos = enemyObj.transform.position;
-        dirWall = Vector3.zero;
-        // Tia kiểm tra từng hướng
-        if (Physics2D.Raycast(pos, Vector2.left, enemyCtrl.radiusScanEnemy, enemyCtrl.layerWall))
-        {
-            dir.Add(Vector2.left);
-            dirWall += Vector2.left;
-        }
-        if (Physics2D.Raycast(pos, Vector2.right, enemyCtrl.radiusScanEnemy, enemyCtrl.layerWall))
-        {
-            dir.Add(Vector2.right);
-            dirWall += Vector2.right;
-        }
-        if (Physics2D.Raycast(pos, Vector2.down, enemyCtrl.radiusScanEnemy, enemyCtrl.layerWall))
-        {
-            dir.Add(Vector2.down);
-            dirWall += Vector2.down;
-        }
-        if (Physics2D.Raycast(pos, Vector2.up, enemyCtrl.radiusScanEnemy, enemyCtrl.layerWall))
-        {
-            dir.Add(Vector2.up);
-            dirWall += Vector2.up;
-        }
-        dirWall = dirWall.normalized;
-        
-        return dir;
-    }
+        List<Node> nodes = new List<Node>();
 
+        foreach(Node n in GridManager.grids)
+        {
+            if(n.isWalkable)
+                nodes.Add(n);
+        }
+
+        int i = Random.Range(0,nodes.Count);
+        return nodes[i];
+    }
+    
     #endregion
 
     //GIZMOS 2193
@@ -195,16 +180,10 @@ public class FishEnemy  : Enemy
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawRay(new Ray(enemyObj.transform.position, dir));
-        Gizmos.DrawRay(new Ray(enemyObj.transform.position, dirWall));
 
         Gizmos.color = Color.red;
         if (enemyCtrl.OtherFish != null)
             Gizmos.DrawLine(enemyObj.transform.position, enemyCtrl.OtherFish.transform.position);
        
-        if (enemyCtrl.wall == null) return;
-        foreach (Vector2 dir in dir_walls)
-        {
-            Gizmos.DrawRay(new Ray(enemyObj.transform.position, dir));
-        }
     }
 }

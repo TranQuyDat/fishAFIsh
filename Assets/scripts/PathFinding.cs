@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class PathFinding : MonoBehaviour
+public class PathFinding 
 {
     public List<Node> openSet;
     public List<Node> closeSet;
 
     Node[,] grids;
-    public List<Node> findPath(Node startNode, Node targetNode, Node[,] grids)
+    public List<Node> findPath(Node startNode, Node targetNode)
     {
+        Node[,] grids = GridManager.grids;
         openSet = new List<Node>();
         closeSet = new List<Node>();
         if (grids == null || grids.Length <= 0) return null;
@@ -38,11 +39,11 @@ public class PathFinding : MonoBehaviour
             foreach (Node n in getNeighbor(curNode))
             {
                 if (!n.isWalkable || closeSet.Contains(n)) continue;
-                float neighborGcost = curNode.Gcost + Vector2.Distance(curNode.pos, n.pos);
+                int neighborGcost = curNode.Gcost + getCost(curNode, n);
                 if (n.Gcost > neighborGcost || !openSet.Contains(n))
                 {
                     n.Gcost = neighborGcost;
-                    n.Hcost = Vector2.Distance(n.pos, targetNode.pos);
+                    n.Hcost = getCost(n, targetNode);
                     n.parent = curNode;
 
                     if (openSet.Contains(n)) continue;
@@ -56,6 +57,14 @@ public class PathFinding : MonoBehaviour
         return null;
     }
 
+    public int getCost(Node a , Node b)
+    {
+        int disx = Mathf.Abs(a.gridx - b.gridx);
+        int disy = Mathf.Abs(a.gridy - b.gridy);
+
+
+        return 14*Mathf.Min(disx,disy) + 10*Mathf.Abs(disx-disy);
+    } 
     public int[,] getDir()
     {
         int[,] dirs = new int[,]
