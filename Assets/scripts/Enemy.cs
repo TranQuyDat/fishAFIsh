@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
-
 public abstract class Enemy 
 {
     public ActionDelegate cur_action;
@@ -42,11 +40,10 @@ public class FishEnemy  : Enemy
     Vector3 newPos;
     float timeDelay = 0;
     Vector3 dir;
-
+    float speed;
     Node enemyNode ;
     Node targetNode;
     List<Node> listNode;
-    int index = 0;
     public FishEnemy (DataFish dataFish , GameObject obj, EnemyManager enemyMngr) 
     {
         base.init(dataFish , obj , enemyMngr);
@@ -56,7 +53,8 @@ public class FishEnemy  : Enemy
         enemyNode = GridManager.instance.posToNode(enemyObj.transform.position);
         targetNode = changePos();
         listNode = pathFinding.findPath(enemyNode, targetNode);
-        newPos = listNode[index].pos;
+        newPos = listNode[0].pos;
+        speed = _dataFish.speed;
     }
 
     public override void eat() 
@@ -64,6 +62,7 @@ public class FishEnemy  : Enemy
         // dk chuyen sang move
         if (enemyCtrl.OtherFish == null)
         {
+            enemyCtrl.actionType = EnemyActionType.swim;
             cur_action = move;
             enemyCtrl.ani.SetBool("isEat", false);
             enemyCtrl.ani.SetBool("isSwim", true);
@@ -74,71 +73,106 @@ public class FishEnemy  : Enemy
    
     public override void move()
     {
+        if (listNode == null) return;
         bool isGo = (enemyObj.transform.position - newPos).magnitude <= 0.01f;
-        if ( isGo && index < listNode.Count -1)
+        
+        // dk: khi đã đến targetNode => random targetNode mới
+        if((isGo &&  listNode.Count <=0 ) || listNode == null ) 
         {
-            index += 1;
-            enemyNode = listNode[index];
-            float j = Random.Range(-0.25f, 0.25f);
-            newPos = enemyNode.pos +new Vector3(j,j,0);
-        }
-
-        if(isGo &&  index >= listNode.Count - 1)
-        {
-            index = 0;
             targetNode = changePos();
             listNode = pathFinding.findPath(enemyNode, targetNode);
         }
 
-        Debug.DrawLine(enemyObj.transform.position, newPos);
-
-        dir = (newPos - enemyObj.transform.position).normalized;
-        Vector3 pos = enemyObj.transform.position + dir * _dataFish.speed * Time.deltaTime;
+        followPath(listNode);
         flip();
-        enemyObj.transform.position = pos;
+
         if (enemyCtrl.OtherFish == null) return;
 
         // dk chuyen sang flee
-        timeDelay = 3f;
+        //timeDelay = 3f;
+        //listNode.Clear();
+        //speed *= 3f;
+        //enemyCtrl.actionType = EnemyActionType.flee;
         //cur_action = flee;
         // dk chuyen sang chase
+        timeDelay = 0f;
+        listNode.Clear();
+        speed *= 3f;
+        enemyCtrl.actionType = EnemyActionType.chase;
+        cur_action = chase;
     }
 
     public override void flee()
     {
-        if(enemyCtrl.OtherFish == null) timeDelay -= 1* Time.deltaTime;
-        
-        // dk chuyen sang move
-        if (enemyCtrl.OtherFish == null && timeDelay<=0f)
-        {
-            cur_action = move;
-            //newPos = changePos();
-            return;
-        }
-        
 
+        if (enemyCtrl.OtherFish == null) timeDelay -= 1 * Time.deltaTime;
+
+
+
+        logicFlee();
+
+        followPath(listNode);
         flip();
-        enemyObj.transform.position += dir.normalized * _dataFish.speed*3f * Time.deltaTime;
+
+
+        // dk chuyen sang move
+        if ((enemyCtrl.OtherFish == null && timeDelay <= 0f) ||
+            (enemyCtrl.OtherFish == null && enemyNode == targetNode)
+            )
+        {
+            if(listNode != null) listNode.Clear();
+            speed = _dataFish.speed;
+            targetNode = changePos();
+            listNode = pathFinding.findPath(enemyNode, targetNode);
+            enemyCtrl.actionType = EnemyActionType.swim;
+            cur_action = move;
+        }
 
     }
 
     public override void chase()
     {
 
-        float dis = (enemyCtrl.PosCheckEnemy.position - enemyCtrl.OtherFish.transform.position).magnitude;
+        timeDelay -= 1 * Time.deltaTime;
+        //Debug.Log(timeDelay);
+        float dis = enemyCtrl.radiusToEat + 1f ;
+        if (enemyCtrl.OtherFish !=null)
+        {
+            Vector2 posOtherFish = enemyCtrl.OtherFish.transform.position;
+            Vector2 posEnemy = enemyObj.transform.position;
+            Vector2 dirChase = (posOtherFish - posEnemy).normalized;
+            targetNode = findNodeDir(dirChase);
+            dis = (enemyCtrl.PosCheckEnemy.position - enemyCtrl.OtherFish.transform.position).magnitude;
+        }
+        if(timeDelay <= 0f && enemyNode != targetNode)
+        {
+            timeDelay = 3;
+            listNode = pathFinding.findPath(enemyNode, targetNode);
+
+            Debug.Log("okok");
+        }
+        followPath(listNode);
+        flip();
+        
+        
         // dk chuyen sang eat
         if (enemyCtrl.OtherFish != null && dis <= enemyCtrl.radiusToEat)
         {
-            cur_action = eat;
+            enemyCtrl.actionType = EnemyActionType.eat;
+            //cur_action = eat;
             enemyCtrl.ani.SetBool("isEat", true);
             enemyCtrl.ani.SetBool("isSwim", false);
             return;
         }
-        if (enemyCtrl.OtherFish != null) return;
-        
+        if (enemyCtrl.OtherFish != null || timeDelay <= 0 || enemyNode != targetNode) return;
+
         // dk chuyen sang move
+        if (listNode != null) listNode.Clear();
+        speed = _dataFish.speed;
+        targetNode = changePos();
+        listNode = pathFinding.findPath(enemyNode, targetNode);
+        enemyCtrl.actionType = EnemyActionType.swim;
         cur_action = move;
-        //newPos = changePos();
     }
 
     //sub method 
@@ -159,13 +193,81 @@ public class FishEnemy  : Enemy
             enemyObj.transform.localScale = scale;
         }
     }
+    public void logicFlee()
+    {
+        if (enemyCtrl.OtherFish == null) return;
+        Vector2 posEnemy = enemyObj.transform.position;
+        Vector2 posPlayer = enemyCtrl.OtherFish.transform.position;
+        Vector2 dirflee = (posEnemy - posPlayer).normalized;
+        if (listNode == null || listNode.Count <= 0)
+        {
+            targetNode = findNodeDir(dirflee);
+            listNode = pathFinding.findPath(enemyNode, targetNode);
+        }
+
+        float angle = Vector2.Angle(dir, dirflee * -1);
+
+        //Debug.Log("targetnode = enemynode :"+ (enemyNode == targetNode));
+        if (angle <= 60f || (enemyNode == targetNode))
+        {
+            //Debug.Log("angle");
+            targetNode = findNodeDir(dirflee);
+            listNode = pathFinding.findPath(enemyNode, targetNode);
+        }
+
+     
+    }
+    public Node findNodeDir(Vector2 dir)
+    {
+        Node bestNode = enemyNode;
+        if(enemyCtrl.OtherFish == null) return bestNode;
+        Vector2 posEnemy = enemyObj.transform.position;
+        float maxAlignment = float.MinValue;
+        foreach(Node n in GridManager.grids)
+        {
+            if (!n.isWalkable || enemyNode == n) continue;
+            Vector2 dirNode = ((Vector2)n.pos - posEnemy).normalized;
+            float alignment = Vector2.Dot(dir, dirNode);
+            if (alignment > maxAlignment)
+            {
+                maxAlignment = alignment;
+                bestNode = n;
+            }
+        }
+        return bestNode;
+    }
+    public void followPath(List<Node> path)
+    {
+        if (path == null) return;
+        bool isGo = (enemyObj.transform.position - newPos).magnitude <= 0.01f;
+        if (path.Count <= 0) return;
+        //dk : chuyển sang Node kế tiếp 
+        if (isGo && path.Count>0)
+        {
+            float j = Random.Range(-0.25f, 0.25f);
+            newPos = listNode[0].pos + new Vector3(j, j, 0);
+            enemyNode = listNode[0];
+            path.RemoveAt(0);
+        }
+
+        //dk : 1 obj chắn ngang đường => findpath lại từ Node hiện tại đến targetNode
+        if(listNode.Count>0 && !listNode[0].isWalkable) 
+            listNode = pathFinding.findPath(enemyNode, targetNode);
+
+        Debug.DrawLine(enemyObj.transform.position, newPos);
+        dir = (newPos - enemyObj.transform.position).normalized;
+        Vector3 pos = enemyObj.transform.position + dir * speed * Time.deltaTime;
+
+        enemyObj.transform.position = pos; // move
+    }
+
     public Node changePos()
     {
         List<Node> nodes = new List<Node>();
 
         foreach(Node n in GridManager.grids)
         {
-            if(n.isWalkable)
+            if(n.isWalkable && n != GridManager.instance.posToNode(enemyObj.transform.position))
                 nodes.Add(n);
         }
 

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: DataFish_whale
   m_EditorClassIdentifier: 
   name: whale
+  type: 0
   speed: 1
   lv: 0
   sprite: {fileID: 1149251281, guid: de5ddf1d86d317e499e3f2a615fe768f, type: 3}

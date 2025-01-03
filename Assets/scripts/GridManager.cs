@@ -35,8 +35,8 @@ public class GridManager : MonoBehaviour
 
     public Transform gridorigin;
     public static Node[,] grids;
-
-
+    public Transform player;
+    Node nodePlayer;
     int curW, curH;
     private void Awake()
     {
@@ -60,6 +60,14 @@ public class GridManager : MonoBehaviour
         {
             init();
         }
+        if (nodePlayer != null)
+        {
+            GridManager.grids[nodePlayer.gridx, nodePlayer.gridy].isWalkable = true;
+        }
+        Node n = GridManager.instance.posToNode(player.position);
+        nodePlayer = n;
+        GridManager.grids[n.gridx, n.gridy].isWalkable = false;
+        
     }
     public void init()
     {
@@ -73,7 +81,7 @@ public class GridManager : MonoBehaviour
             }
         }
     }
-
+   
     public Node posToNode(Vector3 worldPosition)
     {
         if (grids == null) return null;

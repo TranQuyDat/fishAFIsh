@@ -11,6 +11,7 @@ public class PathFinding
     Node[,] grids;
     public List<Node> findPath(Node startNode, Node targetNode)
     {
+        if(startNode == targetNode) return null;
         Node[,] grids = GridManager.grids;
         openSet = new List<Node>();
         closeSet = new List<Node>();
@@ -111,7 +112,7 @@ public class PathFinding
             node = node.parent;
             if(node == startNode)
             {
-                paths.Add(startNode);
+                
                 break;
             }
         }

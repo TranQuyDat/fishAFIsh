@@ -43,8 +43,11 @@ public class PlayerController : MonoBehaviour
 
         flip(transform.position);
     }
-
-   public void destroyFood()
+    private void LateUpdate()
+    {
+        
+    }
+    public void destroyFood()
     {
         Destroy(food.gameObject);
     }

@@ -1,17 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum EnemyActionType { swim, flee, chase, eat }
 public class EnemyController : MonoBehaviour
 {
+    public EnemyActionType actionType;
     public  Enemy enemyscript ;
     public Animator ani;
     public float time;
 
     public Collider2D OtherFish;
-    public Collider2D wall;
     public LayerMask layerEnemy;
-    public LayerMask layerWall;
     public Transform PosCheckEnemy;
     public float radiusToEat;//check to eat
 
@@ -35,7 +34,6 @@ public class EnemyController : MonoBehaviour
 
         OtherFish = Physics2D.OverlapCircle(PosCheckEnemy.position, radiusScanEnemy, layerEnemy);
         
-        wall = Physics2D.OverlapCircle(PosCheckEnemy.position, radiusScanEnemy, layerWall);
         enemyscript.starAction();
     }
     public bool isGizmos;
