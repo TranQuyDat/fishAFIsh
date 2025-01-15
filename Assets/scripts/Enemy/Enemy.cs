@@ -1,20 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 public abstract class Enemy 
 {
+    public EnemyType type;
     public ActionDelegate cur_action;
     public DataFish _dataFish;
     public GameObject enemyObj;
     public EnemyController enemyCtrl;
     public EnemyManager enemyMngr;
+    public float speed;
 
     public PathFinding pathFinding;
     public void init(DataFish dataFish ,GameObject obj , EnemyManager enemyMngr)
     {
         _dataFish = dataFish;
+        type = dataFish.type;
         enemyObj = obj;
         enemyCtrl = obj.GetComponent<EnemyController>();
+        enemyCtrl.type = type;
         pathFinding = new PathFinding();
         this.enemyMngr = enemyMngr;
         cur_action = move;
@@ -40,7 +45,6 @@ public class FishEnemy  : Enemy
     Vector3 newPos;
     float timeDelay = 0;
     Vector3 dir;
-    float speed;
     Node enemyNode ;
     Node targetNode;
     List<Node> listNode;
@@ -56,28 +60,13 @@ public class FishEnemy  : Enemy
         newPos = listNode[0].pos;
         speed = _dataFish.speed;
     }
-
-    public override void eat() 
-    {
-        // dk chuyen sang move
-        if (enemyCtrl.OtherFish == null)
-        {
-            enemyCtrl.actionType = EnemyActionType.swim;
-            cur_action = move;
-            enemyCtrl.ani.SetBool("isEat", false);
-            enemyCtrl.ani.SetBool("isSwim", true);
-            return;
-        }
-    }
-
    
     public override void move()
     {
         if (listNode == null) return;
-        bool isGo = (enemyObj.transform.position - newPos).magnitude <= 0.01f;
         
         // dk: khi đã đến targetNode => random targetNode mới
-        if((isGo &&  listNode.Count <=0 ) || listNode == null ) 
+        if( listNode.Count <=0  || listNode == null ) 
         {
             targetNode = changePos();
             listNode = pathFinding.findPath(enemyNode, targetNode);
@@ -86,26 +75,35 @@ public class FishEnemy  : Enemy
         followPath(listNode);
         flip();
 
-        if (enemyCtrl.OtherFish == null) return;
+        if (enemyCtrl.focusFish == null) return;
 
-        // dk chuyen sang flee
-        //timeDelay = 3f;
-        //listNode.Clear();
-        //speed *= 3f;
-        //enemyCtrl.actionType = EnemyActionType.flee;
-        //cur_action = flee;
-        // dk chuyen sang chase
-        timeDelay = 0f;
-        listNode.Clear();
-        speed *= 3f;
-        enemyCtrl.actionType = EnemyActionType.chase;
-        cur_action = chase;
+        float scaleFocusFish = enemyCtrl.focusFish.transform.localScale.y;
+        float scaleThisFish = enemyObj.transform.localScale.y;
+        if (scaleThisFish < scaleFocusFish)
+        {
+            // dk chuyen sang flee
+            timeDelay = 3f;
+            listNode.Clear();
+            speed = _dataFish.speed * 3f;
+            enemyCtrl.actionType = ActionType.flee;
+            cur_action = flee;
+        }
+
+        if (scaleThisFish > scaleFocusFish) 
+        {
+            // dk chuyen sang chase
+            timeDelay = 0f;
+            listNode.Clear();
+            speed = _dataFish.speed * 3f;
+            enemyCtrl.actionType = ActionType.chase;
+            cur_action = chase;
+        }
     }
 
     public override void flee()
     {
 
-        if (enemyCtrl.OtherFish == null) timeDelay -= 1 * Time.deltaTime;
+        if (enemyCtrl.focusFish == null) timeDelay -= 1 * Time.deltaTime;
 
 
 
@@ -116,15 +114,15 @@ public class FishEnemy  : Enemy
 
 
         // dk chuyen sang move
-        if ((enemyCtrl.OtherFish == null && timeDelay <= 0f) ||
-            (enemyCtrl.OtherFish == null && enemyNode == targetNode)
+        if ((enemyCtrl.focusFish == null && timeDelay <= 0f) ||
+            (enemyCtrl.focusFish == null && enemyNode == targetNode)
             )
         {
             if(listNode != null) listNode.Clear();
             speed = _dataFish.speed;
             targetNode = changePos();
             listNode = pathFinding.findPath(enemyNode, targetNode);
-            enemyCtrl.actionType = EnemyActionType.swim;
+            enemyCtrl.actionType = ActionType.swim;
             cur_action = move;
         }
 
@@ -136,17 +134,17 @@ public class FishEnemy  : Enemy
         timeDelay -= 1 * Time.deltaTime;
         //Debug.Log(timeDelay);
         float dis = enemyCtrl.radiusToEat + 1f ;
-        if (enemyCtrl.OtherFish !=null)
+        if (enemyCtrl.focusFish != null)
         {
-            Vector2 posOtherFish = enemyCtrl.OtherFish.transform.position;
+            Vector2 posOtherFish = enemyCtrl.focusFish.transform.position;
             Vector2 posEnemy = enemyObj.transform.position;
             Vector2 dirChase = (posOtherFish - posEnemy).normalized;
             targetNode = findNodeDir(dirChase);
-            dis = (enemyCtrl.PosCheckEnemy.position - enemyCtrl.OtherFish.transform.position).magnitude;
+            dis = (enemyCtrl.PosCheckEnemy.position - enemyCtrl.focusFish.transform.position).magnitude;
         }
         if(timeDelay <= 0f && enemyNode != targetNode)
         {
-            timeDelay = 3;
+            timeDelay = 2;
             listNode = pathFinding.findPath(enemyNode, targetNode);
 
             Debug.Log("okok");
@@ -156,23 +154,42 @@ public class FishEnemy  : Enemy
         
         
         // dk chuyen sang eat
-        if (enemyCtrl.OtherFish != null && dis <= enemyCtrl.radiusToEat)
+        if (enemyCtrl.focusFish != null && dis <= enemyCtrl.radiusToEat)
         {
-            enemyCtrl.actionType = EnemyActionType.eat;
-            //cur_action = eat;
+            enemyCtrl.actionType = ActionType.eat;
             enemyCtrl.ani.SetBool("isEat", true);
             enemyCtrl.ani.SetBool("isSwim", false);
+            cur_action = eat;
             return;
         }
-        if (enemyCtrl.OtherFish != null || timeDelay <= 0 || enemyNode != targetNode) return;
+        if (enemyCtrl.focusFish != null || timeDelay <= 0 || enemyNode != targetNode) return;
 
         // dk chuyen sang move
         if (listNode != null) listNode.Clear();
         speed = _dataFish.speed;
         targetNode = changePos();
         listNode = pathFinding.findPath(enemyNode, targetNode);
-        enemyCtrl.actionType = EnemyActionType.swim;
+        enemyCtrl.actionType = ActionType.swim;
         cur_action = move;
+    }
+
+    public override void eat()
+    {
+        // dk chuyen sang move
+        if (enemyCtrl.focusFish == null)
+        {
+            enemyCtrl.actionType = ActionType.swim;
+            enemyCtrl.ani.SetBool("isEat", false);
+            enemyCtrl.ani.SetBool("isSwim", true);
+            cur_action = move;
+            return;
+        }
+        EnemyController focusFishCtrl = enemyCtrl.focusFish.GetComponent<EnemyController>();
+        float dis = (enemyCtrl.PosCheckEnemy.position - enemyCtrl.focusFish.transform.position).magnitude;
+        if (dis <= enemyCtrl.radiusToEat)
+        {
+            focusFishCtrl.ondead();
+        }
     }
 
     //sub method 
@@ -195,9 +212,9 @@ public class FishEnemy  : Enemy
     }
     public void logicFlee()
     {
-        if (enemyCtrl.OtherFish == null) return;
+        if (enemyCtrl.focusFish == null) return;
         Vector2 posEnemy = enemyObj.transform.position;
-        Vector2 posPlayer = enemyCtrl.OtherFish.transform.position;
+        Vector2 posPlayer = enemyCtrl.focusFish.transform.position;
         Vector2 dirflee = (posEnemy - posPlayer).normalized;
         if (listNode == null || listNode.Count <= 0)
         {
@@ -220,7 +237,7 @@ public class FishEnemy  : Enemy
     public Node findNodeDir(Vector2 dir)
     {
         Node bestNode = enemyNode;
-        if(enemyCtrl.OtherFish == null) return bestNode;
+        if(enemyCtrl.focusFish == null) return bestNode;
         Vector2 posEnemy = enemyObj.transform.position;
         float maxAlignment = float.MinValue;
         foreach(Node n in GridManager.grids)
@@ -277,15 +294,15 @@ public class FishEnemy  : Enemy
     
     #endregion
 
-    //GIZMOS 2193
+    //GIZMOS 
     public override void OnGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawRay(new Ray(enemyObj.transform.position, dir));
 
         Gizmos.color = Color.red;
-        if (enemyCtrl.OtherFish != null)
-            Gizmos.DrawLine(enemyObj.transform.position, enemyCtrl.OtherFish.transform.position);
+        if (enemyCtrl.focusFish != null)
+            Gizmos.DrawLine(enemyObj.transform.position, enemyCtrl.focusFish.transform.position);
        
     }
 }

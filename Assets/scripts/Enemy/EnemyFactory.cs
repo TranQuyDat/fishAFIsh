@@ -5,10 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 [Serializable]
 
-public  enum EnemyType {
-    whale  , whalekiller  , nemo , anglefish  , shark ,
-}
-public enum GroupEnemyType { fish,  }
+
 public class EnemyFactory : MonoBehaviour
 {
     public List<DataFish> allDataEnemy;
@@ -22,11 +19,14 @@ public class EnemyFactory : MonoBehaviour
 
 
 
-    public Enemy createEnemy(EnemyType type, GameObject prefap, Vector2 pos, Transform parent)
+    public Enemy createEnemy(EnemyType type,Level lv, GameObject prefap, Vector2 pos, Transform parent)
     {
         DataFish dataFish = getDataEnemy(type);
 
         GameObject obj = Instantiate(prefap, pos, Quaternion.identity, parent);
+        EnemyController objCtrl = obj.GetComponent<EnemyController>();
+
+        obj.transform.localScale = dataFish.scale * (float)lv;
 
         Enemy e = type  switch 
         {
@@ -34,7 +34,8 @@ public class EnemyFactory : MonoBehaviour
               => new FishEnemy(dataFish,obj,enemyMngr),
             _ => null
         };
-        obj.GetComponent<EnemyController>().enemyscript = e;
+        objCtrl.enemyscript = e;
+        objCtrl.lv = lv;
         return  e;
     }
 

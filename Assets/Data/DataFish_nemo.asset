@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Nemo
   type: 2
+  scale: {x: 0.5, y: 0.5}
   speed: 1
-  lv: 0
   sprite: {fileID: 1149251281, guid: de5ddf1d86d317e499e3f2a615fe768f, type: 3}
   ani: {fileID: 22100000, guid: 2cf564e588387f54c85396eddb01e9c5, type: 2}

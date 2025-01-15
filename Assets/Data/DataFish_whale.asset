@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: whale
   type: 0
+  scale: {x: 2, y: 2}
   speed: 1
-  lv: 0
   sprite: {fileID: 1149251281, guid: de5ddf1d86d317e499e3f2a615fe768f, type: 3}
   ani: {fileID: 22100000, guid: 9399bc70c04d83a47823e12d4a36ec48, type: 2}

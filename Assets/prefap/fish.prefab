@@ -121,18 +121,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b20b0a9c8913148a89a81307cffddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
+  lv: 0
+  actionType: 0
+  focusFish: {fileID: 0}
+  PosCheckEnemy: {fileID: 5866648659786779840}
+  radiusToEat: 0.2
   ani: {fileID: 1011562449030090886}
-  time: 2
-  OtherFish: {fileID: 0}
-  wall: {fileID: 0}
   layerEnemy:
     serializedVersion: 2
-    m_Bits: 8
-  layerWall:
-    serializedVersion: 2
-    m_Bits: 320
-  PosCheckEnemy: {fileID: 5866648659786779840}
-  radiusToEat: 0.14
+    m_Bits: 520
   radiusScanEnemy: 2.13
   isGizmos: 1
 --- !u!58 &4047223291665649589
@@ -195,7 +193,7 @@ Transform:
   m_GameObject: {fileID: 7830760097826082232}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.349, y: -0.066, z: 0}
+  m_LocalPosition: {x: 0.242, y: -0.066, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

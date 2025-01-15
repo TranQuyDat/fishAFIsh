@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public Level lv;
     public float speed;
     public StateManager stateManager;
     public Transform surFaceSea;

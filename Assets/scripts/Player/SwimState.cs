@@ -22,7 +22,7 @@ public class SwimState : IState
     }
     public void Enter()
     {
-        StateManager.stateTyle = StateTyle.swim;
+        StateManager.stateTyle = ActionType.swim;
         ani.SetBool("isSwim",true);
     }
 

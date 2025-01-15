@@ -14,7 +14,7 @@ public class EnemyManager : MonoBehaviour
     public Vector2 sizeLimit;
     EnemyFactory enemyFactory;
     public EnemyType demoType;
-
+    public Level lv;
     private void Start()
     {
         enemyFactory = new EnemyFactory(allDataEnemy,this);
@@ -24,7 +24,7 @@ public class EnemyManager : MonoBehaviour
         if (!Input.GetMouseButtonDown(0)) return;
 
         Vector2 pos = listPos[Random.Range(0, listPos.Length)].position;
-        enemyFactory.createEnemy(demoType, prefap, pos, parent);
+        enemyFactory.createEnemy(demoType,lv, prefap, pos, parent);
     }
     public bool isGizmos;
     private void OnDrawGizmos()

@@ -2,14 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-public enum StateTyle
-{
-    swim , eat , jump , 
-}
+
 public class StateManager : MonoBehaviour
 {
-    public static StateTyle stateTyle;
-    public StateTyle displayState;
+    public static ActionType stateTyle;
+    public ActionType displayState;
 
     static IState curState;
     public float speed;

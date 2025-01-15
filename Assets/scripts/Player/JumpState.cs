@@ -16,7 +16,7 @@ public class JumpState : IState
 
     public void Enter()
     {
-        StateManager.stateTyle = StateTyle.jump;
+        StateManager.stateTyle = ActionType.jump;
     }
 
     public void Execute()

@@ -20,7 +20,7 @@ public class EatState : IState
     }
     public void Enter()
     {
-        StateManager.stateTyle = StateTyle.eat;
+        StateManager.stateTyle = ActionType.eat;
         ani.SetBool("isEat", true);
     }
 

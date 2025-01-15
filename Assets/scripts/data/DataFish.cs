@@ -8,8 +8,8 @@ public class DataFish : ScriptableObject
 {
     public string name;
     public EnemyType type;
+    public Vector2 scale;
     public float speed;
-    public int lv;
     public Sprite sprite;
     public RuntimeAnimatorController ani;
 

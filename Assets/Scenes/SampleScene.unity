@@ -1118,7 +1118,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5866bb8439b296d4b9278571643f4471, type: 3}
   m_Name: 
@@ -1145,12 +1145,12 @@ GameObject:
   - component: {fileID: 557731782}
   - component: {fileID: 557731783}
   m_Layer: 3
-  m_Name: fish
-  m_TagString: Untagged
+  m_Name: Player_fish
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &557731777
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1247,11 +1247,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 557731776}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f80222b25616374da4a53ce6a153074, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lv: 0
   speed: 20
   stateManager: {fileID: 598488012}
   surFaceSea: {fileID: 1435424679}
@@ -1533,7 +1534,8 @@ MonoBehaviour:
   parent: {fileID: 2047895049}
   limit: {fileID: 840334205}
   sizeLimit: {x: 22.2, y: 14.6}
-  demoType: 0
+  demoType: 2
+  lv: 1
   isGizmos: 1
 --- !u!114 &598488015
 MonoBehaviour:
