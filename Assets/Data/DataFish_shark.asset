@@ -18,3 +18,4 @@ MonoBehaviour:
   speed: 1
   sprite: {fileID: 1149251281, guid: de5ddf1d86d317e499e3f2a615fe768f, type: 3}
   ani: {fileID: 22100000, guid: c4a35219a7b92cb40819c67ca778f326, type: 2}
+  expReward: 2

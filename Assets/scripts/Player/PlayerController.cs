@@ -1,27 +1,56 @@
+using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Unity.Mathematics;
 using UnityEngine;
 
+[Serializable]
+public class Level
+{
+    public LevelType lv = LevelType.child;
+    public Vector2 exp_MaxExp;
+    public void addExp(float exp ,Transform player)
+    {
+        exp_MaxExp.x = Mathf.Min(exp_MaxExp.x + exp, exp_MaxExp.y);
+        if (exp_MaxExp.x < exp_MaxExp.y) return;
+        exp_MaxExp.x = 0;
+        exp_MaxExp.y += (exp_MaxExp.y * 0.3f);
+        levelUp(player);
+    }
+    public void levelUp(Transform obj)
+    {
+        int newlv = math.min((int)LevelType.old, (int)lv + 1);
+        if ((int)lv == newlv) return;
+        lv = (LevelType)(newlv);
+        obj.localScale = (Vector2)obj.localScale * newlv;
+    }
+}
 public class PlayerController : MonoBehaviour
 {
-    public Level lv;
+    [Header("Info settings")]
     public float speed;
+    public Level lv;
+    [Header("Interaction settings")]
+    public Rigidbody2D rb;
     public StateManager stateManager;
     public Transform surFaceSea;
-    public Animator ani;
-    public Rigidbody2D rb;
     public Vector2 cursorPos;
     public Transform headPos;
     public float headRadius;
     public LayerMask layerFood;
-    float waterDrag = 10f;
     public Collider2D food;
+
+    [Header("Animation settings")]
+    public Animator ani;
+    public ActionType actionType;
+
+
+    float waterDrag = 10f;
     // Start is called before the first frame update
     void Start()
     {
-        stateManager.speed = speed;
         StateManager.changeState(new SwimState(rb, this));
     }
 
@@ -31,11 +60,13 @@ public class PlayerController : MonoBehaviour
         cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         food = Physics2D.OverlapCircle(headPos.position,
             headRadius, layerFood);
+        //tren mat nuoc
         if (transform.position.y > (surFaceSea.position.y))
         {
             rb.drag = 0f;
             rb.angularDrag = 0f;
         }
+        //duoi mat nuoc
         else
         {
             rb.drag = waterDrag;
@@ -48,11 +79,11 @@ public class PlayerController : MonoBehaviour
     {
         
     }
-    public void destroyFood()
+    
+    public void addExp(float exp)
     {
-        Destroy(food.gameObject);
+        lv.addExp(exp, this.transform);
     }
-
     public void flip(Vector2 playerPos)
     {
         float diffx = (cursorPos.x - playerPos.x);
@@ -75,7 +106,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public float disyJump;
+    float disyJump;
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;

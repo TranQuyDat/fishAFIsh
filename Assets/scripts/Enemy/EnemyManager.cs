@@ -14,7 +14,7 @@ public class EnemyManager : MonoBehaviour
     public Vector2 sizeLimit;
     EnemyFactory enemyFactory;
     public EnemyType demoType;
-    public Level lv;
+    public LevelType lv;
     private void Start()
     {
         enemyFactory = new EnemyFactory(allDataEnemy,this);

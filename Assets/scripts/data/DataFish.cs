@@ -12,5 +12,6 @@ public class DataFish : ScriptableObject
     public float speed;
     public Sprite sprite;
     public RuntimeAnimatorController ani;
+    public float expReward;
 
 }

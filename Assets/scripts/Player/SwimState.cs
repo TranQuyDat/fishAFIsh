@@ -22,29 +22,37 @@ public class SwimState : IState
     }
     public void Enter()
     {
-        StateManager.stateTyle = ActionType.swim;
+        player.actionType = ActionType.swim;
         ani.SetBool("isSwim",true);
     }
 
     public void Execute()
     {
+        //hd swim
+        Vector3 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) ;
+
+        Vector2 dir = (cursorPos - rb.transform.position).normalized;
+        rb.position +=  dir * (5+speed) * Time.deltaTime;
+
+
         //dk chuyen sang jump
         if(rb.transform.position.y > (surFaceSea.position.y +0.35f ))
         {
             StateManager.changeState(new JumpState(rb, player));
             return;
         }
-        //dk chuyen sang eat
-        if (player.food != null)
-        {
-            StateManager.changeState(new EatState(rb, player));
-            return;
-        }
-        //hd swim
-        Vector3 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) ;
 
-        Vector2 dir = (cursorPos - rb.transform.position).normalized;
-        rb.position +=  dir * (5+speed) * Time.deltaTime;
+        //dk chuyen sang eat
+        if (player.food == null) return;
+        
+        float fScaleY = player.food.transform.localScale.y;
+        float pScaleY = player.transform.localScale.y;
+        
+        if(fScaleY > pScaleY) return;
+
+        StateManager.changeState(new EatState(rb, player));
+        return;
+        
         
 
 

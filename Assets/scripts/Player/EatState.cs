@@ -20,7 +20,7 @@ public class EatState : IState
     }
     public void Enter()
     {
-        StateManager.stateTyle = ActionType.eat;
+        player.actionType = ActionType.eat;
         ani.SetBool("isEat", true);
     }
 
@@ -28,7 +28,10 @@ public class EatState : IState
     {
         if(player.food != null)
         {
-            player.destroyFood();
+           EnemyController enemyCtrl = player.food.GetComponent<EnemyController>();
+            enemyCtrl.ondead();
+            float exp = enemyCtrl.enemyscript._dataFish.expReward * (float)enemyCtrl.lv;
+            player.addExp(exp);
         }
         if (player.food == null)
         {

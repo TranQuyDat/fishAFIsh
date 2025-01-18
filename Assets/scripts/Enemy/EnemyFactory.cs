@@ -19,7 +19,7 @@ public class EnemyFactory : MonoBehaviour
 
 
 
-    public Enemy createEnemy(EnemyType type,Level lv, GameObject prefap, Vector2 pos, Transform parent)
+    public Enemy createEnemy(EnemyType type,LevelType lv, GameObject prefap, Vector2 pos, Transform parent)
     {
         DataFish dataFish = getDataEnemy(type);
 

@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public EnemyType type;
-    public Level lv;
+    public LevelType lv;
     public ActionType actionType;
     public Collider2D focusFish;
     public float speed;

@@ -7,8 +7,8 @@ public enum EnemyType
 {
     whale, whalekiller, nemo, anglefish, shark,
 }
-
-public enum Level
+public enum PanelTyle { pause , play , win , lose}
+public enum LevelType
 {
     child = 1 , young = 2 , old = 3,
 }
