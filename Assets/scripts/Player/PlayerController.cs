@@ -34,29 +34,30 @@ public class PlayerController : MonoBehaviour
     public Level lv;
     [Header("Interaction settings")]
     public Rigidbody2D rb;
-    public StateManager stateManager;
     public Transform surFaceSea;
     public Vector2 cursorPos;
     public Transform headPos;
     public float headRadius;
     public LayerMask layerFood;
     public Collider2D food;
-
+    
     [Header("Animation settings")]
     public Animator ani;
     public ActionType actionType;
 
 
     float waterDrag = 10f;
-    // Start is called before the first frame update
+    StateManager stateManager;
     void Start()
     {
-        StateManager.changeState(new SwimState(rb, this));
+        stateManager = new StateManager();
+        stateManager.changeState(new SwimState(rb, this));
     }
 
     // Update is called once per frame
     void Update()
     {
+        stateManager.excute();
         cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         food = Physics2D.OverlapCircle(headPos.position,
             headRadius, layerFood);
@@ -79,7 +80,10 @@ public class PlayerController : MonoBehaviour
     {
         
     }
-    
+    public void changeState(IState state)
+    {
+        stateManager.changeState(state);
+    }
     public void addExp(float exp)
     {
         lv.addExp(exp, this.transform);

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WinPanel : IState
 {
+    public WinPanel() { }
     public void Enter()
     {
         GameManager.instance.uiGame.panelTyle = PanelTyle.win;
@@ -12,7 +13,25 @@ public class WinPanel : IState
 
     public void Execute()
     {
-        
+        //dk next map
+        if(GameManager.instance.getBtnClked() == ButtonTyle.nextMap)
+        {
+            GameManager.instance.onClick(0);
+            Debug.Log("next map");
+            //change scene
+        }
+        //dk restart game
+        if (GameManager.instance.getBtnClked() == ButtonTyle.restart)
+        {
+            Debug.Log("restart game");
+        }
+        //dk quit to menu
+        if (GameManager.instance.getBtnClked() == ButtonTyle.quit)
+        {
+            GameManager.instance.onClick(0);
+            Debug.Log("quit to menu");
+            // change sence
+        }
     }
 
     public void Exit()

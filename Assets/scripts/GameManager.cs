@@ -26,9 +26,12 @@ public class StatGame
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public StateManager stateManager;
     public SettingMap setting;
     public Uigame uiGame;
     public StatGame statGame;
+    public ButtonTyle displayBtnClked = ButtonTyle.none;
+    private ButtonTyle btnClicked = ButtonTyle.none;
     private void Awake()
     {
         if(instance == null) instance = this;
@@ -38,6 +41,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        stateManager = new StateManager();
+        stateManager.changeState(new PlayPanel());
+    }
+    private void Update()
+    {
+        stateManager.excute();
+    }
+    public void onClick(int id)
+    {
+        btnClicked = (ButtonTyle)id;
+        displayBtnClked = btnClicked;
+    }
 
-
+    public ButtonTyle getBtnClked()
+    {
+        return btnClicked;
+    }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LosePanel : IState
 {
+    public LosePanel() { }
     public void Enter()
     {
         GameManager.instance.uiGame.panelTyle = PanelTyle.lose;
@@ -12,7 +13,18 @@ public class LosePanel : IState
 
     public void Execute()
     {
-        
+        //dk restart game
+        if(GameManager.instance.getBtnClked() == ButtonTyle.restart)
+        {
+            Debug.Log("restart game");
+        }
+        //dk quit to menu
+        if (GameManager.instance.getBtnClked() == ButtonTyle.quit)
+        {
+            GameManager.instance.onClick(0);
+            Debug.Log("quit to menu");
+            // change sence
+        }
     }
 
     public void Exit()

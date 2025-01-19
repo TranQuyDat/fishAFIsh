@@ -1,35 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class StateManager : MonoBehaviour
+public class StateManager
 {
-    static IState actionPlayerState;
-    static IState uiState;
-
-    // Update is called once per frame
-    void Update()
+    private IState curState;
+    public StateManager( )
     {
 
-        if (actionPlayerState != null)
-            actionPlayerState.Execute();
-        if(uiState !=null)
-            uiState.Execute();
     }
-    
-    public static void changeState(IState newState)
+    public void excute()
+    { 
+        if (curState != null)
+            curState.Execute();
+    }
+    public  void changeState(IState newState )
     {
-        if (actionPlayerState != null) actionPlayerState.Exit();
-        actionPlayerState = newState;
-        actionPlayerState.Enter();
+        if ( curState != null) curState.Exit();
+        curState = newState;
+        curState.Enter();
     }
 
 
 
     public void stopState()
     {
-        actionPlayerState.Exit();
-        actionPlayerState = null;
+        curState.Exit();
+        curState = null;
     }
 }

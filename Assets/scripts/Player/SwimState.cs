@@ -38,7 +38,7 @@ public class SwimState : IState
         //dk chuyen sang jump
         if(rb.transform.position.y > (surFaceSea.position.y +0.35f ))
         {
-            StateManager.changeState(new JumpState(rb, player));
+            player.changeState(new JumpState(rb, player));
             return;
         }
 
@@ -50,7 +50,7 @@ public class SwimState : IState
         
         if(fScaleY > pScaleY) return;
 
-        StateManager.changeState(new EatState(rb, player));
+        player.changeState(new EatState(rb, player));
         return;
         
         

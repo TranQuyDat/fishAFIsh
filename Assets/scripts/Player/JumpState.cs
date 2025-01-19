@@ -25,7 +25,7 @@ public class JumpState : IState
         //dk de chuyen sang swim
         if (rb.transform.position.y < (surFaceSea.position.y - 0.5f))
         {
-            StateManager.changeState(new SwimState(rb,player));
+            player.changeState(new SwimState(rb,player));
             return;
         }
 

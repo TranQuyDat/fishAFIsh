@@ -35,7 +35,7 @@ public class EatState : IState
         }
         if (player.food == null)
         {
-            StateManager.changeState(new SwimState(rb,player));
+            player.changeState(new SwimState(rb,player));
         }
 
     }
