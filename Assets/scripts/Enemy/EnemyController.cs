@@ -15,30 +15,44 @@ public class EnemyController : MonoBehaviour
     public Animator ani;
     public Enemy enemyscript ;
     public LayerMask layerEnemy;
-
+    public bool canInit = false;
     Collider2D[] otherFishs;
 
     public float radiusScanEnemy; // check to chase or flee
     void Start()
     {
-        InvokeRepeating("initData",0,1f);
+        if (canInit) 
+        {
+            initData(type);
+            canInit = false;
+        }
     }
 
-    public void initData()
+    public void initData(EnemyType type)
     {
-        if (enemyscript == null) return;
-        this.GetComponent<SpriteRenderer>().sprite = enemyscript._dataFish.sprite;
-        ani.runtimeAnimatorController = enemyscript._dataFish.ani;
+        DataFish dataFish = GameManager.instance.enemyManager.getData(type);
+        enemyscript = type switch
+        {
+            EnemyType.whalekiller or EnemyType.shark or EnemyType.anglefish or EnemyType.nemo or EnemyType.whale
+              => new FishEnemy(dataFish, gameObject),
+            _ => null
+        };
 
-        float scale = Mathf.Abs(transform.localScale.x);
+        this.lv = GameManager.instance.enemyManager.lv;
+        this.type = type;
+
+        this.GetComponent<SpriteRenderer>().sprite = dataFish.sprite;
+        ani.runtimeAnimatorController = dataFish.ani;
+        transform.localScale = dataFish.scale;
+
+        float scale = Mathf.Abs(transform.localScale.x);// cap nhat scale
         float newRadiusEat = radiusToEat * scale ;
+
         if (radiusToEat != newRadiusEat)
         {
             radiusToEat = newRadiusEat;
-            print(radiusToEat);
         }
 
-        CancelInvoke("initData");
     }
 
     // Update is called once per frame
@@ -73,9 +87,11 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    
+
     public void ondead()
     {
-        Destroy(gameObject);
+        PoolManager.instance.destroy(gameObject, 0);
     }
 
     public bool isGizmos;

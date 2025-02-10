@@ -46,27 +46,18 @@ public class GridManager : MonoBehaviour
             return;
         }
         instance = this;
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
         curW = width;
         curH = height;
         init();
     }
+
     private void Update()
     {
         if(width !=curW || height != curH)
         {
             init();
         }
-        if (nodePlayer != null)
-        {
-            GridManager.grids[nodePlayer.gridx, nodePlayer.gridy].isWalkable = true;
-        }
-        Node n = GridManager.instance.posToNode(player.position);
-        nodePlayer = n;
-        GridManager.grids[n.gridx, n.gridy].isWalkable = false;
+        
         
     }
     public void init()
@@ -77,7 +68,7 @@ public class GridManager : MonoBehaviour
             for (int j = 0; j < height; j++)
             {
                 Vector3 wordPos = gridorigin.position + new Vector3(i * cellsize, j * cellsize, 0);
-                grids[i, j] = new Node(wordPos,(i,j),(i%2!=0 || j%2!=0));
+                grids[i, j] = new Node(wordPos,(i,j));//(i%2!=0 || j%2!=0)
             }
         }
     }
@@ -99,36 +90,11 @@ public class GridManager : MonoBehaviour
         return grids[x, y];
     }
 
-    public Transform obj1;
-    public Transform obj2;
-    public bool istart = false;
     public bool isGizmos = false;
     private void OnDrawGizmos()
     {
         if (!isGizmos) return;
-        PathFinding path = new PathFinding();
-        Node starNode = posToNode(obj1.transform.position);
-        Node target = posToNode(obj2.transform.position);
-        if (istart)
-        {
-            List<Node> pathfin = path.findPath(starNode, target);
-            if (pathfin == null)
-            {
-                print("not find way");
-            }
-            else
-            {
-                print(pathfin.Count);
-
-                if (pathfin == null || pathfin.Count <= 0) return;
-                foreach (Node n in pathfin)
-                {
-                    if (n.parent == null) continue;
-                    Gizmos.color = Color.green;
-                    Gizmos.DrawCube(n.pos, Vector3.one * (cellsize - 0.1f));
-                }
-            }
-        }
+       
         if (grids == null || grids.Length <= 0) return;
 
         for (int i = 0; i < width; i++) // Lặp qua từng cột
@@ -141,9 +107,6 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        Gizmos.color = Color.black;
-        Gizmos.DrawCube(starNode.pos, Vector3.one * (cellsize - 0.1f));
-        Gizmos.DrawCube(target.pos, Vector3.one * (cellsize - 0.1f));
     }
 }
 

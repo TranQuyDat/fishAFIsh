@@ -4,24 +4,20 @@ using System.Net;
 using UnityEngine;
 public abstract class Enemy 
 {
-    public EnemyType type;
     public ActionDelegate cur_action;
     public DataFish _dataFish;
     public GameObject enemyObj;
     public EnemyController enemyCtrl;
-    public EnemyManager enemyMngr;
     public float speed;
 
     public PathFinding pathFinding;
-    public void init(DataFish dataFish ,GameObject obj , EnemyManager enemyMngr)
+    public void init(DataFish dataFish ,GameObject obj  )
     {
         _dataFish = dataFish;
-        type = dataFish.type;
         enemyObj = obj;
         enemyCtrl = obj.GetComponent<EnemyController>();
-        enemyCtrl.type = type;
+        enemyCtrl.type = dataFish.type;
         pathFinding = new PathFinding();
-        this.enemyMngr = enemyMngr;
         cur_action = move;
     }
     public void starAction()
@@ -40,19 +36,15 @@ public abstract class Enemy
 
 public class FishEnemy  : Enemy 
 {
-    Vector3 limit;
-    Vector2 sizeLimit;
     Vector3 newPos;
     float timeDelay = 0;
     Vector3 dir;
     Node enemyNode ;
     Node targetNode;
     List<Node> listNode;
-    public FishEnemy (DataFish dataFish , GameObject obj, EnemyManager enemyMngr) 
+    public FishEnemy (DataFish dataFish , GameObject obj ) 
     {
-        base.init(dataFish , obj , enemyMngr);
-        limit = enemyMngr.limit.position;
-        sizeLimit = enemyMngr.sizeLimit;
+        base.init(dataFish , obj );
 
         enemyNode = GridManager.instance.posToNode(enemyObj.transform.position);
         targetNode = changePos();

@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public StateManager stateManager;
+    public EnemyManager enemyManager;
     public SettingMap setting;
     public Uigame uiGame;
     public StatGame statGame;
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
+
     }
 
     private void Start()

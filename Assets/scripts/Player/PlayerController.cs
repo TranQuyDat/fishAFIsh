@@ -25,6 +25,12 @@ public class Level
         if ((int)lv == newlv) return;
         lv = (LevelType)(newlv);
         obj.localScale = (Vector2)obj.localScale * newlv;
+
+        PlayerController playerCtrl = obj.GetComponent<PlayerController>();
+
+        //neu lv up thi update head radius
+        playerCtrl.headRadius *= obj.localScale.y;
+
     }
 }
 public class PlayerController : MonoBehaviour
@@ -75,10 +81,6 @@ public class PlayerController : MonoBehaviour
         }
 
         flip(transform.position);
-    }
-    private void LateUpdate()
-    {
-        
     }
     public void changeState(IState state)
     {
