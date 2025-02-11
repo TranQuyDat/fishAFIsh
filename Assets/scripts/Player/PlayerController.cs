@@ -88,7 +88,11 @@ public class PlayerController : MonoBehaviour
     }
     public void addExp(float exp)
     {
+        float max_value = GameManager.instance.uiGame.slider_Evolution.maxValue;
+        GameManager.instance.uiGame.slider_Evolution.value += 
+            (exp * (max_value/3)/lv.exp_MaxExp.y);
         lv.addExp(exp, this.transform);
+        
     }
     public void flip(Vector2 playerPos)
     {

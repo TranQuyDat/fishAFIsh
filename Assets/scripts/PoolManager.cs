@@ -24,10 +24,13 @@ public class PoolManager : MonoBehaviour
             List<GameObject> list = new List<GameObject>();
             Pools.Add(list);
         }
+        // pool
         if (Pools[id].Count > 0) 
         {
             obj = Pools[id][0];
+            obj.transform.position = pos;
             obj.SetActive(true);
+            obj.transform.parent = parent;
             Pools[id].Remove(obj);
             return obj;
         }
@@ -44,6 +47,7 @@ public class PoolManager : MonoBehaviour
             Pools.Add(list);
         }
         obj.SetActive(false);
+        obj.transform.parent = GameManager.instance.enemyManager.parent_Deactive;
         Pools[id].Add(obj);
     }
 

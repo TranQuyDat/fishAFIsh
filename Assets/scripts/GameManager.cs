@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [Serializable]
 public struct SettingMap
@@ -12,9 +13,16 @@ public struct SettingMap
 public class Uigame
 {
     public PanelTyle panelTyle;
+    [Header("Play")]
     public GameObject ui_PlayPanel;
+    public Slider slider_Evolution;
+    [Header("Pause")]
     public GameObject ui_PausePanel;
+    public Slider slider_Music;
+    public Slider slider_Sound;
+    [Header("Lose")]
     public GameObject ui_LosePanel;
+    [Header("Win")]
     public GameObject ui_WinPanel;
 }
 [Serializable]
@@ -36,7 +44,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         if(instance == null) instance = this;
-        if (instance !=null && instance != this)
+        if(instance !=null && instance != this)
         {
             Destroy(this);
         }

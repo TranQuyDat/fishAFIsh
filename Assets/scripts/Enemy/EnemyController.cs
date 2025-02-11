@@ -28,7 +28,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void initData(EnemyType type)
+    public void initData(EnemyType type, LevelType? lv =null)
     {
         DataFish dataFish = GameManager.instance.enemyManager.getData(type);
         enemyscript = type switch
@@ -38,7 +38,7 @@ public class EnemyController : MonoBehaviour
             _ => null
         };
 
-        this.lv = GameManager.instance.enemyManager.lv;
+        this.lv = (lv != null)? (LevelType)lv :this.lv;
         this.type = type;
 
         this.GetComponent<SpriteRenderer>().sprite = dataFish.sprite;
