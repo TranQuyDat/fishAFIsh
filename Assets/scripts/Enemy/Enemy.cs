@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 using UnityEngine;
 public abstract class Enemy 
 {
@@ -9,8 +10,8 @@ public abstract class Enemy
     public GameObject enemyObj;
     public EnemyController enemyCtrl;
     public float speed;
-
     public PathFinding pathFinding;
+
     public void init(DataFish dataFish ,GameObject obj  )
     {
         _dataFish = dataFish;
@@ -30,6 +31,17 @@ public abstract class Enemy
     public abstract void flee();
     public abstract void chase();
 
+    public async Task delayWithSeconds(float seconds)
+    {
+        await Task.Delay((int)(seconds * 1000));
+    }
+    public async Task delayUntil(bool b)
+    {
+        while (!b)
+        {
+            await Task.Yield();
+        }
+    }
     public abstract void OnGizmos();
 
 }
@@ -84,9 +96,9 @@ public class FishEnemy  : Enemy
         if (scaleThisFish > scaleFocusFish) 
         {
             // dk chuyen sang chase
-            timeDelay = 0f;
+            timeDelay = 0;
             listNode.Clear();
-            speed = _dataFish.speed * 3f;
+            speed = _dataFish.speed * 4f;
             enemyCtrl.actionType = ActionType.chase;
             cur_action = chase;
         }
@@ -120,11 +132,11 @@ public class FishEnemy  : Enemy
 
     }
 
-    public override void chase()
+    public override async void chase()
     {
+        if(timeDelay >0)
+            timeDelay -=  Time.deltaTime;
 
-        timeDelay -= 1 * Time.deltaTime;
-        //Debug.Log(timeDelay);
         float dis = enemyCtrl.radiusToEat + 1f ;
         if (enemyCtrl.focusFish != null)
         {
@@ -133,13 +145,13 @@ public class FishEnemy  : Enemy
             Vector2 dirChase = (posOtherFish - posEnemy).normalized;
             targetNode = findNodeDir(dirChase);
             dis = (enemyCtrl.PosCheckEnemy.position - enemyCtrl.focusFish.transform.position).magnitude;
+            
         }
         if(timeDelay <= 0f && enemyNode != targetNode)
         {
-            timeDelay = 2;
+            timeDelay = 2f;
             listNode = pathFinding.findPath(enemyNode, targetNode);
 
-            Debug.Log("okok");
         }
         followPath(listNode);
         flip();
@@ -149,13 +161,14 @@ public class FishEnemy  : Enemy
         if (enemyCtrl.focusFish != null && dis <= enemyCtrl.radiusToEat)
         {
             enemyCtrl.actionType = ActionType.eat;
+
             enemyCtrl.ani.SetBool("isEat", true);
             enemyCtrl.ani.SetBool("isSwim", false);
             cur_action = eat;
             return;
         }
         if (enemyCtrl.focusFish != null || timeDelay <= 0 || enemyNode != targetNode) return;
-
+        await delayWithSeconds(0.8f);
         // dk chuyen sang move
         if (listNode != null) listNode.Clear();
         speed = _dataFish.speed;
@@ -165,10 +178,14 @@ public class FishEnemy  : Enemy
         cur_action = move;
     }
 
-    public override void eat()
+    public override async void eat()
     {
         // dk chuyen sang move
-        if (enemyCtrl.focusFish == null)
+        bool isFar = enemyCtrl.focusFish!=null &&
+            (enemyCtrl.PosCheckEnemy.position - 
+            enemyCtrl.focusFish.transform.position).magnitude > enemyCtrl.radiusToEat;
+
+        if (enemyCtrl.focusFish == null || isFar )
         {
             enemyCtrl.actionType = ActionType.swim;
             enemyCtrl.ani.SetBool("isEat", false);
@@ -176,12 +193,17 @@ public class FishEnemy  : Enemy
             cur_action = move;
             return;
         }
-        EnemyController focusFishCtrl = enemyCtrl.focusFish.GetComponent<EnemyController>();
-        float dis = (enemyCtrl.PosCheckEnemy.position - enemyCtrl.focusFish.transform.position).magnitude;
-        if (dis <= enemyCtrl.radiusToEat)
+
+        //eat
+        
+        if (enemyCtrl.focusFish.gameObject.CompareTag("Player")) 
         {
-            focusFishCtrl.ondead();
+            enemyCtrl.focusFish.GetComponent<PlayerController>().ondead();
+            return;
         }
+
+        enemyCtrl.focusFish.GetComponent<EnemyController>().ondead();
+            
     }
 
     //sub method 

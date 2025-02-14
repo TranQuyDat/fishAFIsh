@@ -10,21 +10,32 @@ public class CameraController : MonoBehaviour
     public float speed;
     public Vector3 camPos;
     Vector3 nextPos;
+    Rect rect;
     private void Awake()
     {
         player = FindAnyObjectByType<PlayerController>();
+
+        Vector2 pos = (Vector2)player.transform.position;
+        transform.position = new Vector3(pos.x, pos.y, transform.position.z);
+        camPos = pos;
+        rect = new Rect(player.transform.position, sizefolow);
     }
     private void Update()
     {
-        camPos = transform.position;
-        Rect rect = new Rect(player.transform.position, sizefolow);
+        rect.position = player.transform.position;
         if (rect.Contains(camPos)) return;
-        Vector3 dir = (player.transform.position - camPos).normalized;
-        nextPos += dir * speed * Time.deltaTime ;
-        nextPos.z = transform.position.z;
-        transform.position = nextPos; 
-        
+        flowTarger(player.transform);
     }
+
+    public void flowTarger(Transform target)
+    {
+        camPos = transform.position;
+        Vector3 dir = (target.position - camPos).normalized;
+        nextPos = transform.position + dir * speed * Time.deltaTime;
+        nextPos.z = transform.position.z;
+        transform.position = nextPos;
+    }
+
     public bool enGizmos = true;
     private void OnDrawGizmos()
     {

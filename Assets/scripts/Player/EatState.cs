@@ -26,16 +26,20 @@ public class EatState : IState
 
     public void Execute()
     {
-        if(player.food != null)
+        //dk chuyen sang swim
+        if (player.food == null || 
+            (player != null && player.transform.localScale.y < player.food.transform.localScale.y))
+        {
+            player.changeState(new SwimState(rb,player));
+        }
+        // hd eat
+        else
         {
            EnemyController enemyCtrl = player.food.GetComponent<EnemyController>();
+            Debug.Log(enemyCtrl.type);
             enemyCtrl.ondead();
             float exp = enemyCtrl.enemyscript._dataFish.expReward * (float)enemyCtrl.lv;
             player.addExp(exp);
-        }
-        if (player.food == null)
-        {
-            player.changeState(new SwimState(rb,player));
         }
 
     }

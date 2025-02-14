@@ -43,8 +43,8 @@ public class EnemyController : MonoBehaviour
 
         this.GetComponent<SpriteRenderer>().sprite = dataFish.sprite;
         ani.runtimeAnimatorController = dataFish.ani;
-        transform.localScale = dataFish.scale;
-
+        transform.localScale = dataFish.scale * (int)this.lv ;
+        this.radiusScanEnemy *= (int)this.lv;
         float scale = Mathf.Abs(transform.localScale.x);// cap nhat scale
         float newRadiusEat = radiusToEat * scale ;
 
@@ -87,7 +87,12 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    
+    public bool isAniTimeSame(float time )
+    {
+        AnimatorStateInfo curAni = ani.GetCurrentAnimatorStateInfo(0);
+        //print(curAni.normalizedTime%1);
+        return (curAni.normalizedTime % 1) >= time;
+    }
 
     public void ondead()
     {

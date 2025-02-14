@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class SwimState : IState
     float speed;
     Animator ani;
     Transform surFaceSea;
+
+    bool canSwim;
     public SwimState(Rigidbody2D rb, PlayerController player)
     {
         this.player = player;
@@ -29,14 +32,25 @@ public class SwimState : IState
     public void Execute()
     {
         //hd swim
-        Vector3 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition) ;
+        Vector3 inputMove = Input.mousePosition;
+        inputMove.z = 10f;
 
-        Vector2 dir = (cursorPos - rb.transform.position).normalized;
-        rb.position +=  dir * (5+speed) * Time.deltaTime;
+        player.cursorPos = Camera.main.ScreenToWorldPoint(inputMove) ;
+        
+        Vector2 dir = (player.cursorPos - (Vector2)player.transform.position);
+        
+        if(dir.magnitude > (0.5f * player.transform.localScale.y)) canSwim = true;
+        if(dir.magnitude < (0.3f * player.transform.localScale.y)) canSwim = false;
+
+        if (!player.isUpSurFaceWater() && canSwim )
+        {
+            Vector2 pos = rb.position+ dir.normalized * (speed) * Time.deltaTime;
+            rb.position = pos; 
+        }
 
 
         //dk chuyen sang jump
-        if(rb.transform.position.y > (surFaceSea.position.y +0.35f ))
+        if( player.isUpSurFaceWater() && player.isDis2SurfaceWater(0.5f,"<") && rb.velocity.y <-1f)
         {
             player.changeState(new JumpState(rb, player));
             return;

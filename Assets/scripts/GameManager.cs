@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [Serializable]
-public struct SettingMap
+public struct SettingScene
 {
     public float mapScale;
 }
@@ -16,6 +16,7 @@ public class Uigame
     [Header("Play")]
     public GameObject ui_PlayPanel;
     public Slider slider_Evolution;
+    public Image img_Avt;
     [Header("Pause")]
     public GameObject ui_PausePanel;
     public Slider slider_Music;
@@ -36,7 +37,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public StateManager stateManager;
     public EnemyManager enemyManager;
-    public SettingMap setting;
+    public SettingScene setting;
     public Uigame uiGame;
     public StatGame statGame;
     public ButtonTyle displayBtnClked = ButtonTyle.none;

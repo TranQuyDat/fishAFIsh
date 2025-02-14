@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,26 +30,30 @@ public class Level
 
         //neu lv up thi update head radius
         playerCtrl.headRadius *= obj.localScale.y;
+        playerCtrl.speed += newlv;
 
     }
 }
 public class PlayerController : MonoBehaviour
 {
+    
+    [Header("FILL")]
+    public Rigidbody2D rb;
+    public Animator ani;
+    public SpriteRenderer spriteRenderer;
+    public Transform surFaceSea;
+   
     [Header("Info settings")]
     public float speed;
     public Level lv;
+    public ActionType actionType;
     [Header("Interaction settings")]
-    public Rigidbody2D rb;
-    public Transform surFaceSea;
     public Vector2 cursorPos;
     public Transform headPos;
     public float headRadius;
     public LayerMask layerFood;
     public Collider2D food;
     
-    [Header("Animation settings")]
-    public Animator ani;
-    public ActionType actionType;
 
 
     float waterDrag = 10f;
@@ -58,17 +62,18 @@ public class PlayerController : MonoBehaviour
     {
         stateManager = new StateManager();
         stateManager.changeState(new SwimState(rb, this));
+        GameManager.instance.uiGame.img_Avt.sprite = spriteRenderer.sprite;
     }
 
     // Update is called once per frame
     void Update()
     {
+        food = Physics2D.OverlapCircle(headPos.position,headRadius, layerFood);
+
         stateManager.excute();
-        cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        food = Physics2D.OverlapCircle(headPos.position,
-            headRadius, layerFood);
+        
         //tren mat nuoc
-        if (transform.position.y > (surFaceSea.position.y))
+        if (isUpSurFaceWater())
         {
             rb.drag = 0f;
             rb.angularDrag = 0f;
@@ -114,6 +119,32 @@ public class PlayerController : MonoBehaviour
             scale.x = -1* math.abs(scale.x);
             this.transform.localScale = scale;
         }
+    }
+
+    public bool isUpSurFaceWater()
+    {
+        return transform.position.y > (surFaceSea.position.y + 0.35f);
+    }
+
+
+
+    public bool isDis2SurfaceWater(float e, string key)
+    {
+        if(key == "<")
+            return math.abs(transform.position.y - (surFaceSea.position.y + 0.35f)) 
+            <= e;
+        else if(key == ">")
+            return math.abs(transform.position.y - (surFaceSea.position.y + 0.35f))
+            >= e;
+
+        return false;
+
+    }
+
+    public void ondead() 
+    {
+        this.gameObject.SetActive(false);
+        GameManager.instance.statGame.isLose = true;
     }
 
     float disyJump;

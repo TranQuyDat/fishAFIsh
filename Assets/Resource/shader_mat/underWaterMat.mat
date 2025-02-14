@@ -32,7 +32,7 @@ Material:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     - _Distortion: 2.5
-    - _alpha: 2.94
+    - _alpha: 7
     - _speeWave: 0.05
     m_Colors: []
   m_BuildTextureStacks: []
