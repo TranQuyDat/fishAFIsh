@@ -23,14 +23,14 @@ public class WinPanel : IState
         //dk restart game
         if (GameManager.instance.getBtnClked() == ButtonTyle.restart)
         {
-            Debug.Log("restart game");
+            GameManager.instance.onClick(0);
+            GameManager.instance.btn_Restart();
         }
         //dk quit to menu
         if (GameManager.instance.getBtnClked() == ButtonTyle.quit)
         {
             GameManager.instance.onClick(0);
-            Debug.Log("quit to menu");
-            // change sence
+            GameManager.instance.btn_Quit();
         }
     }
 

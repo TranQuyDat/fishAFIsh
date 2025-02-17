@@ -17,7 +17,7 @@ public class JumpState : IState
         player.actionType = ActionType.jump;
         //hd jump
         Vector2 dir = (Vector2.up + Vector2.right * rb.transform.localScale.x).normalized ;
-        rb.AddForce(dir, ForceMode2D.Impulse);
+        rb.AddForce(dir*2, ForceMode2D.Impulse);
     }
 
     public void Execute()

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 public class PausePanel : IState
@@ -25,7 +24,7 @@ public class PausePanel : IState
         if(GameManager.instance.getBtnClked() == ButtonTyle.quit)
         {
             GameManager.instance.onClick(0);
-            Debug.Log("quit to menu");
+            Application.Quit();
             // change sence
         }
     }

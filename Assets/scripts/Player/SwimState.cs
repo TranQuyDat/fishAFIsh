@@ -50,7 +50,7 @@ public class SwimState : IState
 
 
         //dk chuyen sang jump
-        if( player.isUpSurFaceWater() && player.isDis2SurfaceWater(0.5f,"<") && rb.velocity.y <-1f)
+        if( !player.isUpSurFaceWater() && player.isDis2SurfaceWater(0.5f,"<") && rb.velocity.y <-1f)
         {
             player.changeState(new JumpState(rb, player));
             return;

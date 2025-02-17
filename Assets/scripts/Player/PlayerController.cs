@@ -22,14 +22,19 @@ public class Level
     public void levelUp(Transform obj)
     {
         int newlv = math.min((int)LevelType.old, (int)lv + 1);
-        if ((int)lv == newlv) return;
+
+        if ((int)lv == newlv)
+        {
+            GameManager.instance.statGame.isWin = true;
+            return;
+        }
         lv = (LevelType)(newlv);
         obj.localScale = (Vector2)obj.localScale * newlv;
 
         PlayerController playerCtrl = obj.GetComponent<PlayerController>();
 
         //neu lv up thi update head radius
-        playerCtrl.headRadius *= obj.localScale.y;
+        playerCtrl.headRadius = playerCtrl.baseHeadRadius * obj.localScale.y;
         playerCtrl.speed += newlv;
 
     }
@@ -53,7 +58,7 @@ public class PlayerController : MonoBehaviour
     public float headRadius;
     public LayerMask layerFood;
     public Collider2D food;
-    
+    [HideInInspector] public float baseHeadRadius;
 
 
     float waterDrag = 10f;
@@ -63,6 +68,7 @@ public class PlayerController : MonoBehaviour
         stateManager = new StateManager();
         stateManager.changeState(new SwimState(rb, this));
         GameManager.instance.uiGame.img_Avt.sprite = spriteRenderer.sprite;
+        baseHeadRadius = headRadius;
     }
 
     // Update is called once per frame

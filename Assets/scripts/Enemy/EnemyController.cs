@@ -34,7 +34,7 @@ public class EnemyController : MonoBehaviour
         enemyscript = type switch
         {
             EnemyType.whalekiller or EnemyType.shark or EnemyType.anglefish or EnemyType.nemo or EnemyType.whale
-              => new FishEnemy(dataFish, gameObject),
+              => new FishEnemy(dataFish, this,0),//id:0=>fish
             _ => null
         };
 
@@ -58,6 +58,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (enemyscript == null) return;
         otherFishs = Physics2D.OverlapCircleAll(PosCheckEnemy.position, radiusScanEnemy, layerEnemy);
         checkFocusFish();
         enemyscript.starAction();
@@ -96,7 +97,7 @@ public class EnemyController : MonoBehaviour
 
     public void ondead()
     {
-        PoolManager.instance.destroy(gameObject, 0);
+        enemyscript.OnDead();
     }
 
     public bool isGizmos;

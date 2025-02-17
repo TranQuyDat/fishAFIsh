@@ -1,7 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
 using UnityEngine;
 public abstract class Enemy 
 {
@@ -11,15 +10,18 @@ public abstract class Enemy
     public EnemyController enemyCtrl;
     public float speed;
     public PathFinding pathFinding;
-
-    public void init(DataFish dataFish ,GameObject obj  )
+    public bool isfindPath = false;
+    public Coroutine finpathCoroutine;
+    public int idType;
+    public void init(DataFish dataFish ,EnemyController enemyCtrl,int idType)
     {
         _dataFish = dataFish;
-        enemyObj = obj;
-        enemyCtrl = obj.GetComponent<EnemyController>();
+        enemyObj = enemyCtrl.gameObject;
+        this.enemyCtrl = enemyCtrl;
         enemyCtrl.type = dataFish.type;
         pathFinding = new PathFinding();
         cur_action = move;
+        this.idType = idType;
     }
     public void starAction()
     {
@@ -31,50 +33,46 @@ public abstract class Enemy
     public abstract void flee();
     public abstract void chase();
 
-    public async Task delayWithSeconds(float seconds)
+    public virtual void OnDead()
     {
-        await Task.Delay((int)(seconds * 1000));
-    }
-    public async Task delayUntil(bool b)
-    {
-        while (!b)
+        if (finpathCoroutine != null)
         {
-            await Task.Yield();
+            GameManager.instance.StopCoroutine(finpathCoroutine);
+            isfindPath = false;
         }
+        PoolManager.instance.destroy(enemyObj,idType); // id 0:fish, 
     }
+
     public abstract void OnGizmos();
 
 }
 
 public class FishEnemy  : Enemy 
 {
-    Vector3 newPos;
     float timeDelay = 0;
-    Vector3 dir;
+    Vector3 dir; // huong enemy dang di
     Node enemyNode ;
     Node targetNode;
     List<Node> listNode;
-    public FishEnemy (DataFish dataFish , GameObject obj ) 
+    public bool canFindPath;
+    public FishEnemy (DataFish dataFish , EnemyController enemyCtrl, int idType ) 
     {
-        base.init(dataFish , obj );
+        base.init(dataFish , enemyCtrl, idType);
 
+        listNode = new List<Node>();
         enemyNode = GridManager.instance.posToNode(enemyObj.transform.position);
         targetNode = changePos();
-        listNode = pathFinding.findPath(enemyNode, targetNode);
-        newPos = listNode[0].pos;
         speed = _dataFish.speed;
+        startFinPath();
     }
    
     public override void move()
     {
-        if (listNode == null) return;
         
-        // dk: khi đã đến targetNode => random targetNode mới
-        if( listNode.Count <=0  || listNode == null ) 
+        updateFinPath(new (() => ( listNode == null || listNode.Count <= 0)), () =>
         {
             targetNode = changePos();
-            listNode = pathFinding.findPath(enemyNode, targetNode);
-        }
+        });
 
         followPath(listNode);
         flip();
@@ -83,21 +81,19 @@ public class FishEnemy  : Enemy
 
         float scaleFocusFish = enemyCtrl.focusFish.transform.localScale.y;
         float scaleThisFish = enemyObj.transform.localScale.y;
+        // ===>dk chuyen sang flee<===
         if (scaleThisFish < scaleFocusFish)
         {
-            // dk chuyen sang flee
             timeDelay = 3f;
-            listNode.Clear();
             speed = _dataFish.speed * 3f;
             enemyCtrl.actionType = ActionType.flee;
             cur_action = flee;
         }
 
+        // ===>dk chuyen sang chase<===
         if (scaleThisFish > scaleFocusFish) 
         {
-            // dk chuyen sang chase
-            timeDelay = 0;
-            listNode.Clear();
+            timeDelay = 1f;
             speed = _dataFish.speed * 4f;
             enemyCtrl.actionType = ActionType.chase;
             cur_action = chase;
@@ -109,23 +105,40 @@ public class FishEnemy  : Enemy
 
         if (enemyCtrl.focusFish == null) timeDelay -= 1 * Time.deltaTime;
 
+        if (enemyCtrl.focusFish == null) return;
+        //=====>hd Flee<=====
+        Vector2 dirflee = (enemyObj.transform.position -
+            enemyCtrl.focusFish.transform.position).normalized;
 
+        // neu di het cac node update targetNode theo flee dir
+        if (listNode == null || listNode.Count <= 0)
+        {
+            targetNode = findNodeDir(dirflee);
+        }
 
-        logicFlee();
+        //neu focusfish chan dau (goc 60do) thi update targetNode de chuyen huong
+        float angle = Vector2.Angle(dir, dirflee * -1);
+        if (angle <= 60f || (enemyNode == targetNode))
+        {
+            targetNode = findNodeDir(dirflee);
+        }
+
+        //update Find Path
+        updateFinPath(new(() => (listNode == null || listNode.Count <= 0)));
 
         followPath(listNode);
         flip();
 
 
-        // dk chuyen sang move
+        // ===>dk chuyen sang move<===
         if ((enemyCtrl.focusFish == null && timeDelay <= 0f) ||
             (enemyCtrl.focusFish == null && enemyNode == targetNode)
             )
         {
+            timeDelay = 0f;
             if(listNode != null) listNode.Clear();
             speed = _dataFish.speed;
             targetNode = changePos();
-            listNode = pathFinding.findPath(enemyNode, targetNode);
             enemyCtrl.actionType = ActionType.swim;
             cur_action = move;
         }
@@ -134,31 +147,34 @@ public class FishEnemy  : Enemy
 
     public override async void chase()
     {
-        if(timeDelay >0)
-            timeDelay -=  Time.deltaTime;
+        //===>hd chasse<===
 
-        float dis = enemyCtrl.radiusToEat + 1f ;
-        if (enemyCtrl.focusFish != null)
+        updateFinPath(new(() => (enemyCtrl.focusFish != null)), () =>
         {
-            Vector2 posOtherFish = enemyCtrl.focusFish.transform.position;
-            Vector2 posEnemy = enemyObj.transform.position;
-            Vector2 dirChase = (posOtherFish - posEnemy).normalized;
+            Vector2 dirChase = (enemyCtrl.focusFish.transform.position - enemyObj.transform.position).normalized;
             targetNode = findNodeDir(dirChase);
-            dis = (enemyCtrl.PosCheckEnemy.position - enemyCtrl.focusFish.transform.position).magnitude;
-            
-        }
-        if(timeDelay <= 0f && enemyNode != targetNode)
-        {
-            timeDelay = 2f;
-            listNode = pathFinding.findPath(enemyNode, targetNode);
-
-        }
+        });
         followPath(listNode);
         flip();
+
+        // ===>dk chuyen sang move<===
+        if (enemyCtrl.focusFish == null && timeDelay <= 0 && enemyNode == targetNode)
+        {
+            timeDelay = 0;
+            if (listNode != null) listNode.Clear();
+            speed = _dataFish.speed;
+            targetNode = changePos();
+            enemyCtrl.actionType = ActionType.swim;
+            cur_action = move;
+        }
+
+        if (enemyCtrl.focusFish == null) return; 
         
-        
-        // dk chuyen sang eat
-        if (enemyCtrl.focusFish != null && dis <= enemyCtrl.radiusToEat)
+        // get dis to focusFish
+        float dis = (enemyCtrl.PosCheckEnemy.position - enemyCtrl.focusFish.transform.position).magnitude;
+            
+        // ===>dk chuyen sang eat<===
+        if (dis <= enemyCtrl.radiusToEat)
         {
             enemyCtrl.actionType = ActionType.eat;
 
@@ -167,26 +183,23 @@ public class FishEnemy  : Enemy
             cur_action = eat;
             return;
         }
-        if (enemyCtrl.focusFish != null || timeDelay <= 0 || enemyNode != targetNode) return;
-        await delayWithSeconds(0.8f);
-        // dk chuyen sang move
-        if (listNode != null) listNode.Clear();
-        speed = _dataFish.speed;
-        targetNode = changePos();
-        listNode = pathFinding.findPath(enemyNode, targetNode);
-        enemyCtrl.actionType = ActionType.swim;
-        cur_action = move;
+
+        
     }
 
     public override async void eat()
     {
-        // dk chuyen sang move
-        bool isFar = enemyCtrl.focusFish!=null &&
-            (enemyCtrl.PosCheckEnemy.position - 
-            enemyCtrl.focusFish.transform.position).magnitude > enemyCtrl.radiusToEat;
+        // ===>dk chuyen sang move<===
+        bool isToSwim = enemyCtrl.focusFish!=null 
+            &&(
+            (enemyCtrl.PosCheckEnemy.position - enemyCtrl.focusFish.transform.position).magnitude > enemyCtrl.radiusToEat
+            || 
+            enemyCtrl.focusFish.transform.localScale.y > enemyObj.transform.localScale.y
+            );
 
-        if (enemyCtrl.focusFish == null || isFar )
+        if (enemyCtrl.focusFish == null || isToSwim )
         {
+            timeDelay = 0;
             enemyCtrl.actionType = ActionType.swim;
             enemyCtrl.ani.SetBool("isEat", false);
             enemyCtrl.ani.SetBool("isSwim", true);
@@ -194,7 +207,7 @@ public class FishEnemy  : Enemy
             return;
         }
 
-        //eat
+        //===>hd eat<===
         
         if (enemyCtrl.focusFish.gameObject.CompareTag("Player")) 
         {
@@ -206,48 +219,61 @@ public class FishEnemy  : Enemy
             
     }
 
-    //sub method 
+    //<_________________________SUB_METHOD____________________________> 
     #region sub method 
+
+    public void startFinPath()
+    {
+        if (isfindPath) return;
+
+        finpathCoroutine = GameManager.instance.StartCoroutine(finpath());
+        isfindPath = true;
+    }
+    public void updateFinPath(Func<bool> funBool, Action update_values = null)
+    {
+        if (funBool() && update_values !=null)
+        {
+            //gan 1 vai gia tri
+            update_values.Invoke();
+        }
+        canFindPath = funBool();
+    }
+    public IEnumerator finpath() 
+    {
+        while (true)
+        {
+            if (!canFindPath || targetNode.pos == Vector3.zero)
+            {
+                yield return null;
+                continue;
+            }
+            this.listNode = pathFinding.findPath(enemyNode, targetNode);
+            
+            canFindPath=false;
+            yield return new WaitForSeconds(timeDelay);
+        }
+    }
+    //flip
     public void flip()
     {
+        if (listNode.Count <= 0) return;
         Vector3 scale = enemyObj.transform.localScale;
 
-        float dirx = (dir * 2f + enemyObj.transform.position).x;
-        if (dirx - enemyObj.transform.position.x < 0)
+        float dirx = (listNode[0].pos - enemyObj.transform.position).normalized.x*2f;
+        if (dirx < 0)
         {
             scale.x = -Mathf.Abs(scale.x);
             enemyObj.transform.localScale = scale;
         }
-        else if(dirx - enemyObj.transform.position.x > 0)
+        else if(dirx > 0)
         {
             scale.x = Mathf.Abs(scale.x);
             enemyObj.transform.localScale = scale;
         }
     }
-    public void logicFlee()
-    {
-        if (enemyCtrl.focusFish == null) return;
-        Vector2 posEnemy = enemyObj.transform.position;
-        Vector2 posPlayer = enemyCtrl.focusFish.transform.position;
-        Vector2 dirflee = (posEnemy - posPlayer).normalized;
-        if (listNode == null || listNode.Count <= 0)
-        {
-            targetNode = findNodeDir(dirflee);
-            listNode = pathFinding.findPath(enemyNode, targetNode);
-        }
 
-        float angle = Vector2.Angle(dir, dirflee * -1);
 
-        //Debug.Log("targetnode = enemynode :"+ (enemyNode == targetNode));
-        if (angle <= 60f || (enemyNode == targetNode))
-        {
-            //Debug.Log("angle");
-            targetNode = findNodeDir(dirflee);
-            listNode = pathFinding.findPath(enemyNode, targetNode);
-        }
-
-     
-    }
+    // tim node hop ly nhat theo huong
     public Node findNodeDir(Vector2 dir)
     {
         Node bestNode = enemyNode;
@@ -267,42 +293,46 @@ public class FishEnemy  : Enemy
         }
         return bestNode;
     }
+
+    //follow path
     public void followPath(List<Node> path)
     {
-        if (path == null) return;
-        bool isGo = (enemyObj.transform.position - newPos).magnitude <= 0.01f;
-        if (path.Count <= 0) return;
-        //dk : chuyển sang Node kế tiếp 
-        if (isGo && path.Count>0)
+        if (path == null || path.Count <= 0) return;
+
+        // Kiểm tra xem đã gần tới node chưa
+        bool isGo = (enemyObj.transform.position - path[0].pos).magnitude <= 0.1f;
+
+        if (isGo )
         {
-            float j = Random.Range(-0.25f, 0.25f);
-            newPos = listNode[0].pos + new Vector3(j, j, 0);
-            enemyNode = listNode[0];
+            enemyNode = path[0];
             path.RemoveAt(0);
+            if (listNode.Count <= 0) return;
         }
 
-        //dk : 1 obj chắn ngang đường => findpath lại từ Node hiện tại đến targetNode
-        if(listNode.Count>0 && !listNode[0].isWalkable) 
-            listNode = pathFinding.findPath(enemyNode, targetNode);
-
-        Debug.DrawLine(enemyObj.transform.position, newPos);
-        dir = (newPos - enemyObj.transform.position).normalized;
-        Vector3 pos = enemyObj.transform.position + dir * speed * Time.deltaTime;
-
-        enemyObj.transform.position = pos; // move
+        Debug.DrawLine(enemyObj.transform.position, path[0].pos);
+        // Di chuyển mượt mà tới newPos sử dụng Vector3.MoveTowards
+        Vector3 pos = Vector3.MoveTowards(enemyObj.transform.position, path[0].pos, speed * Time.deltaTime);
+        enemyObj.transform.position = pos;
     }
 
+    // random Node
     public Node changePos()
     {
         List<Node> nodes = new List<Node>();
-
+        float dis =Vector2.Distance(enemyObj.transform.position, enemyCtrl.PosCheckEnemy.position);
         foreach(Node n in GridManager.grids)
         {
-            if(n.isWalkable && n != GridManager.instance.posToNode(enemyObj.transform.position))
-                nodes.Add(n);
+            if (Vector2.Distance(enemyObj.transform.position, n.pos) <= dis 
+                || 
+                !n.isWalkable
+                ||
+                n== GridManager.instance.posToNode(enemyObj.transform.position)
+                ) 
+                continue;
+            nodes.Add(n);
         }
 
-        int i = Random.Range(0,nodes.Count);
+        int i = UnityEngine.Random.Range(0,nodes.Count*100)%nodes.Count;
         return nodes[i];
     }
     

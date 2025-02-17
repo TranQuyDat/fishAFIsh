@@ -1,7 +1,8 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [Serializable]
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
+        Application.targetFrameRate = 60;
 
     }
 
@@ -70,5 +72,31 @@ public class GameManager : MonoBehaviour
     public ButtonTyle getBtnClked()
     {
         return btnClicked;
+    }
+    
+    public void btn_Quit()
+    {
+        Application.Quit();
+    }
+    public void btn_Restart()
+    {
+        StartCoroutine(restart());
+    }
+
+    IEnumerator restart()
+    {
+        // Unload assets không sử dụng từ scene cũ
+        yield return Resources.UnloadUnusedAssets();
+
+        yield return null;
+
+        // restart
+        string sceneName = SceneManager.GetActiveScene().name;
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        while (asyncLoad.progress <= 0.9f)
+        {
+            yield return null;
+        }
+
     }
 }

@@ -2945,6 +2945,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   food: {fileID: 0}
+  baseHeadRadius: 0
 --- !u!50 &557731782
 Rigidbody2D:
   serializedVersion: 4
@@ -5787,7 +5788,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 9.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 63537490}
   - {fileID: 1996580019}
@@ -8579,6 +8580,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: fish
       objectReference: {fileID: 0}
+    - target: {fileID: 3803549223783620384, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1149251281, guid: de5ddf1d86d317e499e3f2a615fe768f, type: 3}
     - target: {fileID: 4821024865315999281, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.0499997
@@ -8634,6 +8639,18 @@ PrefabInstance:
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: isGizmos
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
+      propertyPath: radiusToEat
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866648659786779840, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.184
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866648659786779840, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.038
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
