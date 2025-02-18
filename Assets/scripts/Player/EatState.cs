@@ -32,7 +32,6 @@ public class EatState : IState
         else
         {
            EnemyController enemyCtrl = player.food.GetComponent<EnemyController>();
-            Debug.Log(enemyCtrl.type);
             enemyCtrl.ondead();
             float exp = enemyCtrl.enemyscript._dataFish.expReward * (float)enemyCtrl.lv;
             player.addExp(exp);

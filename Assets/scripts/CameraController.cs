@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviour
         player = FindAnyObjectByType<PlayerController>();
 
         Vector2 pos = (Vector2)player.transform.position;
-        transform.position = new Vector3(pos.x, pos.y, transform.position.z);
+        //transform.position = new Vector3(pos.x, pos.y, transform.position.z);
         camPos = pos;
         rect = new Rect(player.transform.position, sizefolow);
     }

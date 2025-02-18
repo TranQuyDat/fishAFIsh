@@ -84,8 +84,8 @@ public class FishEnemy  : Enemy
         // ===>dk chuyen sang flee<===
         if (scaleThisFish < scaleFocusFish)
         {
-            timeDelay = 3f;
-            speed = _dataFish.speed * 3f;
+            timeDelay = 0f;
+            speed = _dataFish.speed * 4f;
             enemyCtrl.actionType = ActionType.flee;
             cur_action = flee;
         }
@@ -94,7 +94,7 @@ public class FishEnemy  : Enemy
         if (scaleThisFish > scaleFocusFish) 
         {
             timeDelay = 1f;
-            speed = _dataFish.speed * 4f;
+            speed = _dataFish.speed * 3f;
             enemyCtrl.actionType = ActionType.chase;
             cur_action = chase;
         }
@@ -102,36 +102,9 @@ public class FishEnemy  : Enemy
 
     public override void flee()
     {
-
-        if (enemyCtrl.focusFish == null) timeDelay -= 1 * Time.deltaTime;
-
-        if (enemyCtrl.focusFish == null) return;
-        //=====>hd Flee<=====
-        Vector2 dirflee = (enemyObj.transform.position -
-            enemyCtrl.focusFish.transform.position).normalized;
-
-        // neu di het cac node update targetNode theo flee dir
-        if (listNode == null || listNode.Count <= 0)
-        {
-            targetNode = findNodeDir(dirflee);
-        }
-
-        //neu focusfish chan dau (goc 60do) thi update targetNode de chuyen huong
-        float angle = Vector2.Angle(dir, dirflee * -1);
-        if (angle <= 60f || (enemyNode == targetNode))
-        {
-            targetNode = findNodeDir(dirflee);
-        }
-
-        //update Find Path
-        updateFinPath(new(() => (listNode == null || listNode.Count <= 0)));
-
-        followPath(listNode);
-        flip();
-
-
         // ===>dk chuyen sang move<===
-        if ((enemyCtrl.focusFish == null && timeDelay <= 0f) ||
+        if ((enemyCtrl.focusFish == null &&  listNode.Count<=0 ) 
+            ||
             (enemyCtrl.focusFish == null && enemyNode == targetNode)
             )
         {
@@ -142,6 +115,36 @@ public class FishEnemy  : Enemy
             enemyCtrl.actionType = ActionType.swim;
             cur_action = move;
         }
+
+        //=====>focusFish = null => di chuyen den khi listNode = 0<=====
+        if(enemyCtrl.focusFish == null)
+        {
+            followPath(listNode);
+            flip();
+            return;
+        }
+        //=====>hd Flee<=====
+        Vector2 dirflee = (enemyObj.transform.position -
+            enemyCtrl.focusFish.transform.position).normalized;
+        if(listNode == null || listNode.Count<=0 )
+            targetNode = findNodeDir(dirflee);
+        
+
+        //neu focusfish chan dau (goc 60do) thi update targetNode de chuyen huong
+        float angle = Vector2.Angle(dir, dirflee * -1);
+        
+
+        //update Find Path
+        updateFinPath(new(() => (angle <= 60f || (enemyNode == targetNode))),
+            () =>{
+                targetNode = findNodeDir(dirflee);
+            }
+        );
+
+        
+        followPath(listNode);
+                flip();
+
 
     }
 
@@ -256,7 +259,7 @@ public class FishEnemy  : Enemy
     //flip
     public void flip()
     {
-        if (listNode.Count <= 0) return;
+        if (listNode == null || listNode.Count <= 0) return;
         Vector3 scale = enemyObj.transform.localScale;
 
         float dirx = (listNode[0].pos - enemyObj.transform.position).normalized.x*2f;
