@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class PlayPanel : IState
 {
-    public PlayPanel() { }
+    public Uigame uiGame;
+    public PlayPanel() 
+    {
+        this.uiGame = GameManager.instance.uiGame;
+    }
     public void Enter()
     {
-        GameManager.instance.uiGame.panelTyle = PanelTyle.play;
-        GameManager.instance.uiGame.ui_PlayPanel.SetActive(true);
+        uiGame.panelType = PanelType.play;
+        uiGame.ui_PlayPanel.SetActive(true);
     }
 
     public void Execute()
@@ -33,6 +37,6 @@ public class PlayPanel : IState
     public void Exit()
     {
         GameManager.instance.onClick(0);
-        GameManager.instance.uiGame.ui_PlayPanel.SetActive(false);
+        uiGame.ui_PlayPanel.SetActive(false);
     }
 }

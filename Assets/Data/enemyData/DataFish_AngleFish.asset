@@ -10,12 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20d6b4056d052c042a9876d9eb00e38d, type: 3}
-  m_Name: DataFish_whale
+  m_Name: DataFish_AngleFish
   m_EditorClassIdentifier: 
-  name: whale
-  type: 0
-  scale: {x: 2, y: 2}
+  name: Angle fish
+  type: 3
+  scaleLV:
+  - {x: 0.6, y: 0.6}
+  - {x: 0.9, y: 0.9}
+  - {x: 1.17, y: 1.17}
   speed: 1
   sprite: {fileID: 1149251281, guid: de5ddf1d86d317e499e3f2a615fe768f, type: 3}
-  ani: {fileID: 22100000, guid: 9399bc70c04d83a47823e12d4a36ec48, type: 2}
-  expReward: 3
+  ani: {fileID: 22100000, guid: cef6872fe7f05d847905184d6dc9a85e, type: 2}
+  expReward: 1

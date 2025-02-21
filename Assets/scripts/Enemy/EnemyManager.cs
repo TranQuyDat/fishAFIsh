@@ -2,56 +2,109 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using static UnityEditor.PlayerSettings;
 
+[System.Serializable]
+public class NormalEnemy
+{
+    public Transform postopright;
+    public Transform posdownleft;
+    public int countEnemy;
+    public float timeSpawn;
+    public List<EnemyType> enemyTypes;
+    public List<LevelType> lvs;
+
+}
+[System.Serializable]
+public class DangeroutEnemy
+{
+    public Transform[] posList;//left or right
+    public Vector2 targetPos;
+    public float rangePosY;
+    public float timeSpawn;
+    public EnemyType[] dangerousType;
+    public LevelType lv;
+}
 public class EnemyManager : MonoBehaviour
 {
     public List<DataFish> allDataEnemy;
-    public Transform[] listPos;
-    public GameObject prefap;
 
     public Transform parent_Active;
     public Transform parent_Deactive;
 
-    public int countEnemy;
-    public float timeSpawn;
-    public EnemyType[] enemyTypes;
-    public LevelType[] lvs;
+    public NormalEnemy eNormal;
+    public DangeroutEnemy eDangerous;
 
-    public float cur_time;
+
+    public static EnemyFactory enemyFactory;
+    private void Awake()
+    {
+        EnemyManager.enemyFactory = new EnemyFactory();
+    }
+
     private void Start()
     {
-        cur_time = timeSpawn;
+        InvokeRepeating("spawnNormalEnemy", 0f, eNormal.timeSpawn);
+        InvokeRepeating("spawnDangerousEnemy", 0f, eDangerous.timeSpawn);
     }
-    private void Update()
-    {
-        if(cur_time > 0) cur_time -= Time.deltaTime;
-        
-        int cur_count = parent_Active.childCount;
-        
-        if (countEnemy == cur_count || cur_time > 0) return;
-        cur_time = timeSpawn;
-        spawnEnemy();
 
-    }
-    public void spawnEnemy() 
+    public void spawnNormalEnemy()
     {
+        if (!GameManager.instance.statGame.isStart) return;
+        int cur_count = parent_Active.childCount;
+        if (eNormal.countEnemy == cur_count ) return;
         //random pos
-        float posX = Random.Range(listPos[0].position.x, listPos[1].position.x);
-        float posY = Random.Range(listPos[0].position.y, listPos[1].position.y);
+        float posX = Random.Range(eNormal.posdownleft.position.x, 
+            eNormal.postopright.position.x);
+        float posY = Random.Range(eNormal.posdownleft.position.y, 
+            eNormal.postopright.position.y);
         Vector2 pos = new Vector2(posX, posY);
 
         //random type
-        int ranInt = Random.Range(0, 10 * enemyTypes.Length) / 10;
-        EnemyType type = enemyTypes[ranInt];
+        int ranInt = Random.Range(0, 100 * eNormal.enemyTypes.Count) % eNormal.enemyTypes.Count;
+        EnemyType type = eNormal.enemyTypes[ranInt];
 
         //random level
-        ranInt = Random.Range(0, 10 * lvs.Length) / 10;
-        LevelType lv = lvs[ranInt];
+        ranInt = Random.Range(0, 100 * eNormal.lvs.Count) % eNormal.lvs.Count;
+        LevelType lv = eNormal.lvs[ranInt];
 
         //create enemy
         GameObject obj = PoolManager.instance.pool(0, pos, parent_Active);
-        obj.GetComponent<EnemyController>().initData(type, lv);
+        infoEnemy info = new infoEnemy(type,EnemyState.NormalEnemy, lv);
+        obj.GetComponent<EnemyController>().initData(info);
     }
+
+    public void spawnDangerousEnemy()
+    {
+
+        if (!GameManager.instance.statGame.isStart) return;
+        //random type
+        int ranInt = Random.Range(0, 100 * eDangerous.dangerousType.Length) % eDangerous.dangerousType.Length;
+        EnemyType type = eDangerous.dangerousType[ranInt];
+        //random pos 
+        ranInt = Random.Range(0, 100) % 2;
+
+        float y = Random.Range(eDangerous.posList[ranInt].position.y - eDangerous.rangePosY,
+            eDangerous.posList[ranInt].position.y + eDangerous.rangePosY);
+        Vector2 pos = new Vector2(eDangerous.posList[ranInt].position.x, y);
+        
+        eDangerous.targetPos = new Vector2(eDangerous.posList[(ranInt+1)%2].position.x,y);
+        //create enemy
+
+        GameObject obj = PoolManager.instance.pool(0, pos, parent_Active);
+        infoEnemy info = new infoEnemy(type,EnemyState.DangerousEnemy, eDangerous.lv);
+        obj.GetComponent<EnemyController>().initData(info);
+
+    }
+
+    public void addTypeAndLv(EnemyType eType,LevelType eLvs)
+    {
+        if(!eNormal.enemyTypes.Contains(eType))
+            eNormal.enemyTypes.Add(eType);
+        if (!eNormal.lvs.Contains(eLvs))
+            eNormal.lvs.Add(eLvs);
+    }
+
     public DataFish getData(EnemyType type)
     {
         return allDataEnemy.
@@ -63,5 +116,13 @@ public class EnemyManager : MonoBehaviour
     {
         if (!isGizmos) return;
         Gizmos.color = Color.green;
+        if (eDangerous.posList == null || eDangerous.posList.Length <= 0) return;
+        Gizmos.color = Color.black;
+        foreach (Transform tran in eDangerous.posList)
+        {
+            Vector2 pos = tran.position;
+            Gizmos.DrawLine(new Vector2(pos.x, pos.y + eDangerous.rangePosY)
+                , new Vector2(pos.x, pos.y - eDangerous.rangePosY));
+        }
     }
 }

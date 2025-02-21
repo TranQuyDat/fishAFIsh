@@ -6,14 +6,15 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [Serializable]
-public struct SettingScene
+public class SettingScene
 {
-    public float mapScale;
+    public float mapScale = 1;
+    public SceneType nextScene ;
 }
 [Serializable]
 public class Uigame
 {
-    public PanelTyle panelTyle;
+    public PanelType panelType;
     [Header("Play")]
     public GameObject ui_PlayPanel;
     public Slider slider_Evolution;
@@ -22,6 +23,8 @@ public class Uigame
     public GameObject ui_PausePanel;
     public Slider slider_Music;
     public Slider slider_Sound;
+    public RectTransform ui_selectMap;
+    public GameObject btn_OpentSelectMap;
     [Header("Lose")]
     public GameObject ui_LosePanel;
     [Header("Win")]
@@ -30,6 +33,7 @@ public class Uigame
 [Serializable]
 public class StatGame
 {
+    public bool isStart;
     public bool isWin;
     public bool isLose;
 }
@@ -38,6 +42,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public StateManager stateManager;
     public EnemyManager enemyManager;
+    public PlayerController playerCtrl;
     public SettingScene setting;
     public Uigame uiGame;
     public StatGame statGame;
@@ -57,7 +62,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         stateManager = new StateManager();
-        stateManager.changeState(new PlayPanel());
+        stateManager.changeState(new PausePanel());
     }
     private void Update()
     {
@@ -74,6 +79,11 @@ public class GameManager : MonoBehaviour
         return btnClicked;
     }
     
+    public void changScene( SceneType scene)
+    {
+        SceneManager.LoadScene(scene.ToString());
+    }
+
     public void btn_Quit()
     {
         Application.Quit();

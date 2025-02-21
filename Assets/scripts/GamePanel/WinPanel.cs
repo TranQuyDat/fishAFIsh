@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class WinPanel : IState
 {
-    public WinPanel() { }
+    public Uigame uiGame;
+    public WinPanel() 
+    {
+        this.uiGame = GameManager.instance.uiGame;
+    }
     public void Enter()
     {
-        GameManager.instance.uiGame.panelTyle = PanelTyle.win;
+        GameManager.instance.uiGame.panelType = PanelType.win;
         GameManager.instance.uiGame.ui_WinPanel.SetActive(true);
     }
 
@@ -17,7 +21,7 @@ public class WinPanel : IState
         if(GameManager.instance.getBtnClked() == ButtonTyle.nextMap)
         {
             GameManager.instance.onClick(0);
-            Debug.Log("next map");
+            GameManager.instance.changScene(GameManager.instance.setting.nextScene);
             //change scene
         }
         //dk restart game

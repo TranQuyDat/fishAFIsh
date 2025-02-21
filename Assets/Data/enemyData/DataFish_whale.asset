@@ -10,12 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20d6b4056d052c042a9876d9eb00e38d, type: 3}
-  m_Name: DataFish_nemo
+  m_Name: DataFish_whale
   m_EditorClassIdentifier: 
-  name: Nemo
-  type: 2
-  scale: {x: 0.5, y: 0.5}
+  name: whale
+  type: 0
+  scaleLV:
+  - {x: 18, y: 18}
+  - {x: 36, y: 36}
+  - {x: 54, y: 54}
   speed: 1
   sprite: {fileID: 1149251281, guid: de5ddf1d86d317e499e3f2a615fe768f, type: 3}
-  ani: {fileID: 22100000, guid: 2cf564e588387f54c85396eddb01e9c5, type: 2}
-  expReward: 1
+  ani: {fileID: 22100000, guid: 9399bc70c04d83a47823e12d4a36ec48, type: 2}
+  expReward: 3

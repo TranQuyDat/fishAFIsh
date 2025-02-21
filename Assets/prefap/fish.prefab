@@ -98,7 +98,7 @@ Animator:
   m_GameObject: {fileID: 3431089250043959822}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 87025db39ca30ee4796155390b408082, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -121,17 +121,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b20b0a9c8913148a89a81307cffddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  lv: 0
+  info:
+    type: 0
+    state: 0
+    lv: 1
+    speed: 0
+    canInit: 0
   actionType: 0
   focusFish: {fileID: 0}
   PosCheckEnemy: {fileID: 5866648659786779840}
   radiusToEat: 0.2
-  ani: {fileID: 1011562449030090886}
   layerEnemy:
     serializedVersion: 2
     m_Bits: 520
   radiusScanEnemy: 2.13
+  ani: {fileID: 1011562449030090886}
   isGizmos: 1
 --- !u!58 &4047223291665649589
 CircleCollider2D:

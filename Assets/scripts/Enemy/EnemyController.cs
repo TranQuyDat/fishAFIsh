@@ -1,57 +1,73 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+[System.Serializable]
+public class infoEnemy
 {
     public EnemyType type;
+    public EnemyState state;
     public LevelType lv;
+    public float speed;
+    public bool canInit = false;
+    public infoEnemy(EnemyType type,EnemyState state, LevelType lv, float speed=0)
+    {
+        this.type = type;
+        this.state = state;
+        this.lv = lv;
+        this.speed = speed;
+    }
+
+}
+public class EnemyController : MonoBehaviour
+{
+    
+    public infoEnemy info;
     public ActionType actionType;
     public Collider2D focusFish;
-    public float speed;
     public Transform PosCheckEnemy;
-    public float radiusToEat;//check to eat
+    public float radiusToEat;
+    public LayerMask layerEnemy;
+    public float radiusScanEnemy;
     public Animator ani;
     public Enemy enemyscript ;
-    public LayerMask layerEnemy;
-    public bool canInit = false;
+
+
     Collider2D[] otherFishs;
 
-    public float radiusScanEnemy; // check to chase or flee
     void Start()
     {
-        if (canInit) 
+        if (info.canInit) 
         {
-            initData(type);
-            canInit = false;
+            initData(info);
+            info.canInit = false;
         }
     }
 
-    public void initData(EnemyType type, LevelType? lv =null)
+    public void initData(infoEnemy info)
     {
-        DataFish dataFish = GameManager.instance.enemyManager.getData(type);
-        enemyscript = type switch
-        {
-            EnemyType.whalekiller or EnemyType.shark or EnemyType.anglefish or EnemyType.nemo or EnemyType.whale
-              => new FishEnemy(dataFish, this,0),//id:0=>fish
-            _ => null
-        };
+        DataFish dataFish = GameManager.instance.enemyManager.getData(info.type);
+        enemyscript = EnemyManager.enemyFactory.create(info.state, info.type, dataFish, this, 0);
 
-        this.lv = (lv != null)? (LevelType)lv :this.lv;
-        this.type = type;
+
+        //set 
+        this.info =info;
 
         this.GetComponent<SpriteRenderer>().sprite = dataFish.sprite;
         ani.runtimeAnimatorController = dataFish.ani;
-        transform.localScale = dataFish.scale * (int)this.lv ;
-        this.radiusScanEnemy *= (int)this.lv;
-        float scale = Mathf.Abs(transform.localScale.x);// cap nhat scale
-        float newRadiusEat = radiusToEat * scale ;
 
-        if (radiusToEat != newRadiusEat)
-        {
-            radiusToEat = newRadiusEat;
-        }
+        float mapScale = GameManager.instance.setting.mapScale;
+
+        transform.localScale = dataFish.scaleLV[(int)this.info.lv] * mapScale;
+
+        float scale = transform.localScale.y  ;// cap nhat scale
+
+
+        this.radiusScanEnemy = 2.13f * scale ;
+        radiusToEat = 0.2f * scale;
+
 
     }
 
@@ -62,30 +78,37 @@ public class EnemyController : MonoBehaviour
         otherFishs = Physics2D.OverlapCircleAll(PosCheckEnemy.position, radiusScanEnemy, layerEnemy);
         checkFocusFish();
         enemyscript.starAction();
-        speed = enemyscript.speed;
+        info.speed = enemyscript.speed;
     }
 
 
     public void checkFocusFish()
     {
+        if (otherFishs.Length <= 0) return;
         if(focusFish!=null && !otherFishs.Contains(focusFish))
         {
             focusFish = null;
         }
-        if (focusFish != null) return;
+        if (focusFish != null && otherFishs.Length==1) return;
+        float dis = radiusScanEnemy+1;
+        Collider2D col = null;
         foreach (Collider2D c in otherFishs)
         {
-            if (c.CompareTag("Player"))
-            {
-                focusFish = c;
-                return;
-            }
-                
-            EnemyController eCtrl = c.GetComponent<EnemyController>();
-            if (eCtrl.type == this.type) continue;
-            focusFish = c;
+            if (dis < Vector2.Distance(c.transform.position, transform.position)) 
+                continue;
+            col = c;
+        }
+        if (col == null) return;
+        if (col.CompareTag("Player"))
+        {
+            focusFish = col;
             return;
         }
+                
+        EnemyController eCtrl = col.GetComponent<EnemyController>();
+        if (eCtrl.info.type == this.info.type) return ;
+            focusFish = col;
+            return;
     }
 
     public bool isAniTimeSame(float time )

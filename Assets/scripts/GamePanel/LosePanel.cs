@@ -5,11 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class LosePanel : IState
 {
-    public LosePanel() { }
+    public Uigame uiGame;
+    public LosePanel() 
+    {
+        this.uiGame = GameManager.instance.uiGame; ;
+    }
     public void Enter()
     {
-        GameManager.instance.uiGame.panelTyle = PanelTyle.lose;
-        GameManager.instance.uiGame.ui_LosePanel.SetActive(true);
+        uiGame.panelType = PanelType.lose;
+        uiGame.ui_LosePanel.SetActive(true);
     }
 
     public void Execute()

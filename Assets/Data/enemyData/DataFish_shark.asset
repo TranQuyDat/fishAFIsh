@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Shark
   type: 4
-  scale: {x: 1.5, y: 1.5}
+  scaleLV:
+  - {x: 4, y: 4}
+  - {x: 8, y: 8}
+  - {x: 12, y: 12}
   speed: 1
   sprite: {fileID: 1149251281, guid: de5ddf1d86d317e499e3f2a615fe768f, type: 3}
   ani: {fileID: 22100000, guid: c4a35219a7b92cb40819c67ca778f326, type: 2}

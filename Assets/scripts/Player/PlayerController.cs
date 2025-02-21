@@ -74,6 +74,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!GameManager.instance.statGame.isStart) return;
         food = Physics2D.OverlapCircle(headPos.position,headRadius, layerFood);
 
         stateManager.excute();
