@@ -1,45 +1,65 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WinPanel : IState
 {
     public Uigame uiGame;
-    public WinPanel() 
+    GameManager gameManager;
+    public WinPanel()
     {
         this.uiGame = GameManager.instance.uiGame;
     }
     public void Enter()
     {
-        GameManager.instance.uiGame.panelType = PanelType.win;
-        GameManager.instance.uiGame.ui_WinPanel.SetActive(true);
+        gameManager = GameManager.instance;
+        gameManager.uiGame.panelType = PanelType.win;
+        uiGame.ui_WinPanel.SetActive(true);
+        setStar();
     }
 
     public void Execute()
     {
         //dk next map
-        if(GameManager.instance.getBtnClked() == ButtonTyle.nextMap)
+        if (GameManager.instance.getBtnClked() == ButtonTyle.nextMap)
         {
-            GameManager.instance.onClick(0);
-            GameManager.instance.changScene(GameManager.instance.setting.nextScene);
+            gameManager.onClick(0);
+            int idScene = gameManager.setting.idScene;
+            gameManager.changScene(gameManager.dataGame.allMap[idScene + 1].sceneType);
             //change scene
         }
         //dk restart game
-        if (GameManager.instance.getBtnClked() == ButtonTyle.restart)
+        if (gameManager.getBtnClked() == ButtonTyle.restart)
         {
-            GameManager.instance.onClick(0);
-            GameManager.instance.btn_Restart();
+            gameManager.onClick(0);
+            gameManager.btn_Restart();
         }
         //dk quit to menu
-        if (GameManager.instance.getBtnClked() == ButtonTyle.quit)
+        if (gameManager.getBtnClked() == ButtonTyle.quit)
         {
-            GameManager.instance.onClick(0);
-            GameManager.instance.btn_Quit();
+            gameManager.onClick(0);
+            gameManager.btn_Quit();
+        }
+    }
+
+    public void setStar()
+    {
+        int countStar=0;
+        if (gameManager.playerCtrl.score < 100) countStar = 1;
+        else if (gameManager.playerCtrl.score >= 100) countStar = 2;
+        else if (gameManager.playerCtrl.score >=150) countStar = 3;
+
+        for(int i =0;i < gameManager.uiGame.stars.Length ;i++)
+        {
+            gameManager.uiGame.stars[i].sprite = (i+1<=countStar)
+                ? gameManager.uiGame.starOn
+                : gameManager.uiGame.starOff;
         }
     }
 
     public void Exit()
     {
-        GameManager.instance.uiGame.ui_WinPanel.SetActive(false);
+        gameManager.uiGame.ui_WinPanel.SetActive(false);
     }
 }

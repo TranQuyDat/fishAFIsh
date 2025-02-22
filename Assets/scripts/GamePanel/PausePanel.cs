@@ -8,24 +8,27 @@ public class PausePanel : IState
     public Uigame uiGame;
     Vector3 oldPosSelectMap;
     bool isOpentSelectMap = false;
+    int idSceneSelect = 0;
+    GameManager gameManager;
     public PausePanel() 
     {
-        this.uiGame = GameManager.instance.uiGame; ;
+        gameManager = GameManager.instance;
+        this.uiGame = gameManager.uiGame; ;
         this.oldPosSelectMap = uiGame.ui_selectMap.anchoredPosition;
     }
     public void Enter()
     {
         uiGame.panelType = PanelType.pause;
         uiGame.ui_PausePanel.SetActive(true);
-        GameManager.instance.statGame.isStart = false;
-        GameManager.instance.playerCtrl.rb.gravityScale = 0f;
-        GameManager.instance.playerCtrl.rb.velocity = Vector2.zero;
+        gameManager.statGame.isStart = false;
+        gameManager.playerCtrl.rb.gravityScale = 0f;
+        gameManager.playerCtrl.rb.velocity = Vector2.zero;
     }
 
     public void Execute()
     {
         //btn openSelectMap
-        if(GameManager.instance.getBtnClked() == ButtonTyle.openSelectMap)
+        if(gameManager.getBtnClked() == ButtonTyle.openSelectMap)
         {
             Vector3 pos = new Vector3(oldPosSelectMap.x * -1, oldPosSelectMap.y,oldPosSelectMap.z);
             
@@ -34,7 +37,7 @@ public class PausePanel : IState
 
             if(uiGame.ui_selectMap.anchoredPosition.x == -oldPosSelectMap.x)
             {
-                GameManager.instance.onClick(0);
+                gameManager.onClick(0);
                 oldPosSelectMap.x = -oldPosSelectMap.x;
 
                 isOpentSelectMap = (!isOpentSelectMap) 
@@ -48,46 +51,50 @@ public class PausePanel : IState
             }
         }
         //btn select Map
-        if (GameManager.instance.getBtnClked() == ButtonTyle.selectMap)
+        if (gameManager.getBtnClked() == ButtonTyle.selectMap)
         {
-
+            gameManager.onClick(0);
+            if (idSceneSelect == gameManager.setting.idScene) return;
+            gameManager.changScene(gameManager.dataGame.allMap[idSceneSelect].sceneType);
         }
-        //btn arowlefp
-        if (GameManager.instance.getBtnClked() == ButtonTyle.arowLeft)
-        {
-
-        }
-        //btn arowRight
-        if (GameManager.instance.getBtnClked() == ButtonTyle.arowRight)
-        {
-
-        }
+        //btn arowlefp or arowright
+        btn_left_right(gameManager.getBtnClked());
+        
         //dk chuyen sang play
-        if (Input.GetKeyDown(KeyCode.Escape) || GameManager.instance.getBtnClked() == ButtonTyle.resume)
+        if (Input.GetKeyDown(KeyCode.Escape) || gameManager.getBtnClked() == ButtonTyle.resume)
         {
-            GameManager.instance.stateManager.changeState(new PlayPanel());
+            gameManager.stateManager.changeState(new PlayPanel());
         }
 
         // dk quit to menu
-        if(GameManager.instance.getBtnClked() == ButtonTyle.quit)
+        if(gameManager.getBtnClked() == ButtonTyle.quit)
         {
-            GameManager.instance.onClick(0);
+            gameManager.onClick(0);
             Application.Quit();
         }
 
+    }
 
-
+    public void btn_left_right(ButtonTyle btn)
+    {
+        if (btn != ButtonTyle.arowLeft && btn != ButtonTyle.arowRight) return;
+        gameManager.onClick(0);
+        idSceneSelect += ((btn == ButtonTyle.arowLeft) ? -1 : 1);
+        idSceneSelect = (idSceneSelect + gameManager.dataGame.allMap.Length)
+            % gameManager.dataGame.allMap.Length;
+        uiGame.txt_selectMap.text ="Select "+ gameManager.dataGame.allMap[idSceneSelect].sceneType;
+        uiGame.img_fishSelectMap.sprite = gameManager.dataGame.allMap[idSceneSelect].spriteFish;
     }
 
     public void Exit()
     {
-        GameManager.instance.onClick(0);
-        GameManager.instance.statGame.isStart = true;
+        gameManager.onClick(0);
+        gameManager.statGame.isStart = true;
         uiGame.ui_selectMap.anchoredPosition = new Vector2(Mathf.Abs(oldPosSelectMap.x)
             ,oldPosSelectMap.y);
         uiGame.btn_OpentSelectMap.transform.localScale = new Vector3(-1, 1, 1);
         uiGame.ui_PausePanel.SetActive(false);
 
-        GameManager.instance.playerCtrl.rb.gravityScale = 1f;
+        gameManager.playerCtrl.rb.gravityScale = 1f;
     }
 }

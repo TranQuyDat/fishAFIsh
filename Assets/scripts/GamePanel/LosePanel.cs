@@ -6,9 +6,11 @@ using UnityEngine.SceneManagement;
 public class LosePanel : IState
 {
     public Uigame uiGame;
+    GameManager gameManager;
     public LosePanel() 
     {
-        this.uiGame = GameManager.instance.uiGame; ;
+        gameManager = GameManager.instance;
+        this.uiGame = gameManager.uiGame; ;
     }
     public void Enter()
     {
@@ -19,16 +21,16 @@ public class LosePanel : IState
     public void Execute()
     {
         //dk restart game
-        if(GameManager.instance.getBtnClked() == ButtonTyle.restart)
+        if(gameManager.getBtnClked() == ButtonTyle.restart)
         {
-            GameManager.instance.onClick(0);
-            GameManager.instance.btn_Restart();
+            gameManager.onClick(0);
+            gameManager.btn_Restart();
         }
         //dk quit to menu
-        if (GameManager.instance.getBtnClked() == ButtonTyle.quit)
+        if (gameManager.getBtnClked() == ButtonTyle.quit)
         {
-            GameManager.instance.onClick(0);;
-            GameManager.instance.btn_Quit();
+            gameManager.onClick(0);;
+            gameManager.btn_Quit();
         }
     }
 
@@ -36,6 +38,6 @@ public class LosePanel : IState
 
     public void Exit()
     {
-        GameManager.instance.uiGame.ui_LosePanel.SetActive(false);
+        gameManager.uiGame.ui_LosePanel.SetActive(false);
     }
 }

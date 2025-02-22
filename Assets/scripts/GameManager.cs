@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,7 +10,7 @@ using UnityEngine.UI;
 public class SettingScene
 {
     public float mapScale = 1;
-    public SceneType nextScene ;
+    public int idScene ;
 }
 [Serializable]
 public class Uigame
@@ -25,10 +26,15 @@ public class Uigame
     public Slider slider_Sound;
     public RectTransform ui_selectMap;
     public GameObject btn_OpentSelectMap;
+    public TextMeshProUGUI txt_selectMap;
+    public Image img_fishSelectMap;
     [Header("Lose")]
     public GameObject ui_LosePanel;
     [Header("Win")]
     public GameObject ui_WinPanel;
+    public Image[] stars;
+    public Sprite starOn;
+    public Sprite starOff;
 }
 [Serializable]
 public class StatGame
@@ -43,9 +49,12 @@ public class GameManager : MonoBehaviour
     public StateManager stateManager;
     public EnemyManager enemyManager;
     public PlayerController playerCtrl;
+
     public SettingScene setting;
     public Uigame uiGame;
     public StatGame statGame;
+
+    public DataGame dataGame;
     public ButtonTyle displayBtnClked = ButtonTyle.none;
     private ButtonTyle btnClicked = ButtonTyle.none;
     private void Awake()

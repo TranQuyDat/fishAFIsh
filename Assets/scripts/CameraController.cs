@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.UIElements;
 public class CameraController : MonoBehaviour
 {
     public PlayerController player;
@@ -20,9 +18,6 @@ public class CameraController : MonoBehaviour
         cam = Camera.main;
         player = FindAnyObjectByType<PlayerController>();
 
-        Vector2 pos = (Vector2)player.transform.position;
-        //transform.position = new Vector3(pos.x, pos.y, transform.position.z);
-        camPos = pos;
         rect = new Rect(player.transform.position, sizefolow);
     }
     private void Update()

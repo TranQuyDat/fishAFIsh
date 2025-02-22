@@ -41,8 +41,6 @@ public class DangerFishEnemy : Enemy
 
     public override void eat()
     {
-        //===>dh eat<===
-        base.eat(); 
 
         // ===>dk chuyen sang move<===
         bool isToSwim = enemyCtrl.focusFish != null
@@ -60,6 +58,9 @@ public class DangerFishEnemy : Enemy
             cur_action = move;
             return;
         }
+
+        //===>dh eat<===
+        base.eat(); 
 
 
         

@@ -29,9 +29,9 @@ public class Level
             return;
         }
         lv = (LevelType)(newlv);
-        obj.localScale = (Vector2)obj.localScale * newlv;
 
         PlayerController playerCtrl = obj.GetComponent<PlayerController>();
+        obj.localScale = playerCtrl.data.scaleLV[newlv]*GameManager.instance.setting.mapScale;
 
         //neu lv up thi update head radius
         playerCtrl.headRadius = playerCtrl.baseHeadRadius * obj.localScale.y;
@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
     public Animator ani;
     public SpriteRenderer spriteRenderer;
     public Transform surFaceSea;
-   
+    public DataFish data;
     [Header("Info settings")]
     public float speed;
     public Level lv;
@@ -59,12 +59,17 @@ public class PlayerController : MonoBehaviour
     public LayerMask layerFood;
     public Collider2D food;
     [HideInInspector] public float baseHeadRadius;
+    public float score { get;private set;}
 
 
     float waterDrag = 10f;
     StateManager stateManager;
+    int comboCount = 0;
+    float comboTime = 2f;
+    float resetComboTime = 2f;
     void Start()
     {
+        init();
         stateManager = new StateManager();
         stateManager.changeState(new SwimState(rb, this));
         GameManager.instance.uiGame.img_Avt.sprite = spriteRenderer.sprite;
@@ -78,7 +83,12 @@ public class PlayerController : MonoBehaviour
         food = Physics2D.OverlapCircle(headPos.position,headRadius, layerFood);
 
         stateManager.excute();
-        
+        if(comboTime > 0)
+        {
+            comboTime--;
+            if (comboTime <= 0) comboCount = 0;
+        }
+
         //tren mat nuoc
         if (isUpSurFaceWater())
         {
@@ -94,18 +104,41 @@ public class PlayerController : MonoBehaviour
 
         flip(transform.position);
     }
+
+    public void init()
+    {
+        lv.lv = LevelType.child;
+        spriteRenderer.sprite = data.sprite;
+        ani.runtimeAnimatorController = data.ani;
+        transform.localScale = data.scaleLV[0]*GameManager.instance.setting.mapScale;
+    }
+
     public void changeState(IState state)
     {
         stateManager.changeState(state);
     }
+
     public void addExp(float exp)
     {
         float max_value = GameManager.instance.uiGame.slider_Evolution.maxValue;
+
         GameManager.instance.uiGame.slider_Evolution.value += 
             (exp * (max_value/3)/lv.exp_MaxExp.y);
+        
+        // reward exp
         lv.addExp(exp, this.transform);
         
     }
+
+    public void addScore(Transform enemy)
+    {
+        float baseScore = 5 * (enemy.localScale.y/transform.localScale.y);
+
+        comboCount++;
+        comboTime = resetComboTime;
+        score += (comboCount - 1) * 2 + baseScore;
+    }
+
     public void flip(Vector2 playerPos)
     {
         float diffx = (cursorPos.x - playerPos.x);

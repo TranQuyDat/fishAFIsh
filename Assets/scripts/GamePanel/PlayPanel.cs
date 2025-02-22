@@ -5,9 +5,11 @@ using UnityEngine;
 public class PlayPanel : IState
 {
     public Uigame uiGame;
+    GameManager gameManager;
     public PlayPanel() 
     {
-        this.uiGame = GameManager.instance.uiGame;
+        gameManager = GameManager.instance;
+        this.uiGame = gameManager.uiGame;
     }
     public void Enter()
     {
@@ -18,25 +20,25 @@ public class PlayPanel : IState
     public void Execute()
     {
         //dk chuyen sang pause
-        if (Input.GetKeyDown(KeyCode.Escape) || GameManager.instance.getBtnClked() == ButtonTyle.pause )
+        if (Input.GetKeyDown(KeyCode.Escape) || gameManager.getBtnClked() == ButtonTyle.pause )
         {
-            GameManager.instance.stateManager.changeState(new PausePanel());
+            gameManager.stateManager.changeState(new PausePanel());
         }
         //dk chuyen sang win
-        if (GameManager.instance.statGame.isWin)
+        if (gameManager.statGame.isWin)
         {
-            GameManager.instance.stateManager.changeState(new WinPanel() );
+            gameManager.stateManager.changeState(new WinPanel() );
         }
         //dk chuyen sang lose
-        if (GameManager.instance.statGame.isLose)
+        if (gameManager.statGame.isLose)
         {
-            GameManager.instance.stateManager.changeState(new LosePanel() );
+            gameManager.stateManager.changeState(new LosePanel() );
         }
     }
 
     public void Exit()
     {
-        GameManager.instance.onClick(0);
+        gameManager.onClick(0);
         uiGame.ui_PlayPanel.SetActive(false);
     }
 }
