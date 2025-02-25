@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: fish_shark_eat
+  m_Name: fish_Tetra_eat
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,11 +21,11 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -296465130, guid: b911a8032aaa963419823185f746b189, type: 3}
+      value: {fileID: 1663593456, guid: 541cbfbdce6ea92439b5506081349af1, type: 3}
     - time: 0.1
-      value: {fileID: 1612717631, guid: b911a8032aaa963419823185f746b189, type: 3}
+      value: {fileID: -302992112, guid: 541cbfbdce6ea92439b5506081349af1, type: 3}
     - time: 0.2
-      value: {fileID: -1507109001, guid: b911a8032aaa963419823185f746b189, type: 3}
+      value: {fileID: 348134768, guid: 541cbfbdce6ea92439b5506081349af1, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -48,9 +48,9 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -296465130, guid: b911a8032aaa963419823185f746b189, type: 3}
-    - {fileID: 1612717631, guid: b911a8032aaa963419823185f746b189, type: 3}
-    - {fileID: -1507109001, guid: b911a8032aaa963419823185f746b189, type: 3}
+    - {fileID: 1663593456, guid: 541cbfbdce6ea92439b5506081349af1, type: 3}
+    - {fileID: -302992112, guid: 541cbfbdce6ea92439b5506081349af1, type: 3}
+    - {fileID: 348134768, guid: 541cbfbdce6ea92439b5506081349af1, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

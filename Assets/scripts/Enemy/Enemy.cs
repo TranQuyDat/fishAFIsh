@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public abstract class Enemy 
+public abstract class Enemy : IEat
 {
     public ActionDelegate cur_action;
     public DataFish _dataFish;
@@ -20,7 +20,6 @@ public abstract class Enemy
         this.enemyCtrl = enemyCtrl;
         enemyCtrl.info.type = dataFish.type;
         pathFinding = new PathFinding();
-        cur_action = move;
         this.idType = idType;
         this.speed = dataFish.speed;
     }
@@ -30,8 +29,6 @@ public abstract class Enemy
         cur_action?.Invoke();
     }
     public delegate void ActionDelegate();
-    public abstract void move();
-
     public virtual void eat() 
     {
         //===>hd eat<===
@@ -43,16 +40,6 @@ public abstract class Enemy
         }
 
         enemyCtrl.focusFish.GetComponent<EnemyController>().ondead();
-    }
-
-    public virtual void flee() 
-    {
-
-    }
-    
-    public virtual void chase() 
-    {
-
     }
 
     public virtual void OnDead()

@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: fish_shark_eat
+  m_Name: fish_RedTilapia_eat
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,11 +21,15 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -296465130, guid: b911a8032aaa963419823185f746b189, type: 3}
+      value: {fileID: 71381261, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
     - time: 0.1
-      value: {fileID: 1612717631, guid: b911a8032aaa963419823185f746b189, type: 3}
+      value: {fileID: 1234255705, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
     - time: 0.2
-      value: {fileID: -1507109001, guid: b911a8032aaa963419823185f746b189, type: 3}
+      value: {fileID: 698300398, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
+    - time: 0.3
+      value: {fileID: -2936625, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
+    - time: 0.4
+      value: {fileID: -928643662, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -48,15 +52,17 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -296465130, guid: b911a8032aaa963419823185f746b189, type: 3}
-    - {fileID: 1612717631, guid: b911a8032aaa963419823185f746b189, type: 3}
-    - {fileID: -1507109001, guid: b911a8032aaa963419823185f746b189, type: 3}
+    - {fileID: 71381261, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
+    - {fileID: 1234255705, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
+    - {fileID: 698300398, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
+    - {fileID: -2936625, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
+    - {fileID: -928643662, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.3
+    m_StopTime: 0.5
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

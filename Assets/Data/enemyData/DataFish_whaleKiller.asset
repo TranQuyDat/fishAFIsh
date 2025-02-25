@@ -18,7 +18,7 @@ MonoBehaviour:
   - {x: 4.5, y: 4.5}
   - {x: 9, y: 9}
   - {x: 13.5, y: 13.5}
-  speed: 1
+  speed: 5
   sprite: {fileID: 1149251281, guid: de5ddf1d86d317e499e3f2a615fe768f, type: 3}
   ani: {fileID: 9100000, guid: e987fa11f713577419f46a2477f8ae15, type: 2}
-  expReward: 2.5
+  expReward: 5

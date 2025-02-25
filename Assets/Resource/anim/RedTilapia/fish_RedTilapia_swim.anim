@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: fish_shark_eat
+  m_Name: fish_RedTilapia_swim
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,11 +21,21 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -296465130, guid: b911a8032aaa963419823185f746b189, type: 3}
+      value: {fileID: 201549374, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
     - time: 0.1
-      value: {fileID: 1612717631, guid: b911a8032aaa963419823185f746b189, type: 3}
+      value: {fileID: 1996744465, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
     - time: 0.2
-      value: {fileID: -1507109001, guid: b911a8032aaa963419823185f746b189, type: 3}
+      value: {fileID: 1849944822, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
+    - time: 0.3
+      value: {fileID: -2010780119, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
+    - time: 0.4
+      value: {fileID: -235507538, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
+    - time: 0.5
+      value: {fileID: -1288452025, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
+    - time: 0.6
+      value: {fileID: 837378907, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
+    - time: 0.7
+      value: {fileID: -990918204, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -48,15 +58,20 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -296465130, guid: b911a8032aaa963419823185f746b189, type: 3}
-    - {fileID: 1612717631, guid: b911a8032aaa963419823185f746b189, type: 3}
-    - {fileID: -1507109001, guid: b911a8032aaa963419823185f746b189, type: 3}
+    - {fileID: 201549374, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
+    - {fileID: 1996744465, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
+    - {fileID: 1849944822, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
+    - {fileID: -2010780119, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
+    - {fileID: -235507538, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
+    - {fileID: -1288452025, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
+    - {fileID: 837378907, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
+    - {fileID: -990918204, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.3
+    m_StopTime: 0.8
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class FishEnemy : Enemy
+public class FishEnemy : Enemy , IMove ,IEat ,IChase , IFlee 
 {
     float timeDelay = 0;
     Vector3 dir; // huong enemy dang di
@@ -15,17 +15,23 @@ public class FishEnemy : Enemy
     public FishEnemy(DataFish dataFish, EnemyController enemyCtrl, int idType)
     {
         base.init(dataFish, enemyCtrl, idType);
-
-        listNode = new List<Node>();
         enemyNode = GridManager.instance.posToNode(enemyObj.transform.position);
         targetNode = changePos();
+
+        cur_action = move;
+
         speed = _dataFish.speed;
-        startFinPath();
     }
 
-    public override void move()
+    public void move()
     {
 
+        if(listNode == null)
+        {
+            listNode = new List<Node>();
+            startFinPath();
+            return;
+        }
         updateFinPath(new(() => (listNode == null || listNode.Count <= 0)), () =>
         {
             targetNode = changePos();
@@ -57,7 +63,7 @@ public class FishEnemy : Enemy
         }
     }
 
-    public override void flee()
+    public void flee()
     {
         // ===>dk chuyen sang move<===
         if ((enemyCtrl.focusFish == null && listNode.Count <= 0)
@@ -105,7 +111,7 @@ public class FishEnemy : Enemy
 
     }
 
-    public override void chase()
+    public void chase()
     {
         //===>hd chasse<===
 

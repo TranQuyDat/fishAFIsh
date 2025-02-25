@@ -5,7 +5,7 @@ using UnityEngine;
 public enum ActionType { swim, flee, chase, eat , jump }
 public enum EnemyType
 {
-    whale, whalekiller, nemo, anglefish, shark,
+    whale, whalekiller, nemo, anglefish, shark, blueFinTuna,redTilaPia,tetra,
 }
 public enum EnemyState
 {

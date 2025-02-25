@@ -15,12 +15,13 @@ public class EnemyFactory
         add2Dic(EnemyState.NormalEnemy, EnemyType.nemo, (data, eCtrl, id) => new FishEnemy(data,eCtrl,id));
         add2Dic(EnemyState.NormalEnemy, EnemyType.anglefish, (data, eCtrl, id) => new FishEnemy(data,eCtrl,id));
         add2Dic(EnemyState.NormalEnemy, EnemyType.shark, (data, eCtrl, id) => new FishEnemy(data,eCtrl,id));
+        add2Dic(EnemyState.NormalEnemy, EnemyType.tetra, (data, eCtrl, id) => new FishEnemy(data,eCtrl,id));
+        add2Dic(EnemyState.NormalEnemy, EnemyType.redTilaPia, (data, eCtrl, id) => new FishEnemy(data,eCtrl,id));
+        add2Dic(EnemyState.NormalEnemy, EnemyType.blueFinTuna, (data, eCtrl, id) => new FishEnemy(data,eCtrl,id));
 
         //dangerous enemy
         add2Dic(EnemyState.DangerousEnemy, EnemyType.whale, (data, eCtrl, id) => new DangerFishEnemy(data, eCtrl, id));
         add2Dic(EnemyState.DangerousEnemy, EnemyType.whalekiller, (data, eCtrl, id) => new DangerFishEnemy(data, eCtrl, id));
-        add2Dic(EnemyState.DangerousEnemy, EnemyType.nemo, (data, eCtrl, id) => new DangerFishEnemy(data, eCtrl, id));
-        add2Dic(EnemyState.DangerousEnemy, EnemyType.anglefish, (data, eCtrl, id) => new DangerFishEnemy(data, eCtrl, id));
         add2Dic(EnemyState.DangerousEnemy, EnemyType.shark, (data, eCtrl, id) => new DangerFishEnemy(data, eCtrl, id));
     }
 

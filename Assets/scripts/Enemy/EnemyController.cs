@@ -111,6 +111,11 @@ public class EnemyController : MonoBehaviour
             return;
     }
 
+    public Collider2D[] getOtherFish()
+    {
+        return otherFishs; 
+    }
+
     public bool isAniTimeSame(float time )
     {
         AnimatorStateInfo curAni = ani.GetCurrentAnimatorStateInfo(0);

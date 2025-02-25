@@ -196,7 +196,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.type
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.canInit
@@ -278,7 +278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.lv
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: isGizmos
@@ -286,7 +286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.type
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.canInit
@@ -666,7 +666,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.lv
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: isGizmos
@@ -674,7 +674,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.type
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.canInit
@@ -992,7 +992,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.lv
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: isGizmos
@@ -1000,7 +1000,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.type
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.canInit
@@ -1475,7 +1475,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.type
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.canInit
@@ -1557,7 +1557,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.lv
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: isGizmos
@@ -1565,7 +1565,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.type
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.canInit
@@ -1647,7 +1647,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.lv
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: isGizmos
@@ -1655,7 +1655,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.type
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.canInit
@@ -1737,7 +1737,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.lv
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: isGizmos
@@ -1745,7 +1745,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.type
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.canInit
@@ -1863,7 +1863,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.lv
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: isGizmos
@@ -1871,7 +1871,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.type
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.canInit
@@ -2413,7 +2413,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.type
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.canInit
@@ -2626,7 +2626,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.type
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.canInit
@@ -4537,7 +4537,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.type
-      value: 3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5118236687683835229, guid: aaee039b665aab143857944f8abf6bcd, type: 3}
       propertyPath: info.canInit
@@ -5685,6 +5685,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7a2196aa7bedf804aa0d0f2c4b2a81fd, type: 2}
   - {fileID: 11400000, guid: 771e5dd387114bc478d04f18f111b1ec, type: 2}
   - {fileID: 11400000, guid: 77960f101991a244981a114273d8effc, type: 2}
+  - {fileID: 11400000, guid: e808424e40cddf742a9bb6fc8b6b48f1, type: 2}
+  - {fileID: 11400000, guid: 31c44a4050db4e741b4ca25311d6218b, type: 2}
+  - {fileID: 11400000, guid: ca34cdc3c72364f42934cc4ab271cbd1, type: 2}
   parent_Active: {fileID: 2245343612042743726}
   parent_Deactive: {fileID: 3035768685643775444}
   eNormal:
@@ -5692,8 +5695,8 @@ MonoBehaviour:
     posdownleft: {fileID: 3649165529875036402}
     countEnemy: 10
     timeSpawn: 3
-    enemyTypes: 03000000
-    lvs: 00000000
+    enemyTypes: 07000000
+    lvs: 000000000100000002000000
   eDangerous:
     posList:
     - {fileID: 1669273751}

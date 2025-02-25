@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class DangerFishEnemy : Enemy
+public class DangerFishEnemy : Enemy , IMove
 {
     Vector2? tarGetPos =null;
     public DangerFishEnemy(DataFish dataFish, EnemyController enemyCtrl, int idType )
     {
         base.init(dataFish, enemyCtrl, idType);
         tarGetPos = GameManager.instance.enemyManager.eDangerous.targetPos;
+        cur_action = move;
     }
 
-    public override void move()
+    public void move()
     {
         if (tarGetPos == null) return;
         enemyObj.transform.position = Vector2.MoveTowards(enemyObj.transform.position, (Vector2)tarGetPos, speed *10* Time.deltaTime);
@@ -39,28 +40,32 @@ public class DangerFishEnemy : Enemy
         }
     }
 
-    public override void eat()
+    public void eat()
     {
 
         // ===>dk chuyen sang move<===
-        bool isToSwim = enemyCtrl.focusFish != null
-            && (
-            (enemyCtrl.PosCheckEnemy.position - enemyCtrl.focusFish.transform.position).magnitude > enemyCtrl.radiusToEat
+        bool canSwim =
+                enemyCtrl.focusFish == null
             ||
-            enemyCtrl.focusFish.transform.localScale.y > enemyObj.transform.localScale.y
+                enemyCtrl.focusFish != null
+            && 
+            (
+                (enemyCtrl.PosCheckEnemy.position - enemyCtrl.focusFish.transform.position).magnitude 
+                > enemyCtrl.radiusToEat
+            ||
+                enemyCtrl.focusFish.transform.localScale.y > enemyObj.transform.localScale.y
             );
 
-        if (enemyCtrl.focusFish == null || isToSwim)
+        if (!canSwim)
         {
-            enemyCtrl.actionType = ActionType.swim;
-            enemyCtrl.ani.SetBool("isEat", false);
-            enemyCtrl.ani.SetBool("isSwim", true);
-            cur_action = move;
+            base.eat();
             return;
         }
-
-        //===>dh eat<===
-        base.eat(); 
+        enemyCtrl.actionType = ActionType.swim;
+        enemyCtrl.ani.SetBool("isEat", false);
+        enemyCtrl.ani.SetBool("isSwim", true);
+        cur_action = move;
+        return;
 
 
         

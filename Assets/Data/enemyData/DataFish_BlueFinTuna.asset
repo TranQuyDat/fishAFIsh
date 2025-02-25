@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20d6b4056d052c042a9876d9eb00e38d, type: 3}
-  m_Name: DataFish_whale
+  m_Name: DataFish_BlueFinTuna
   m_EditorClassIdentifier: 
-  name: whale
-  type: 0
+  name: blueFinTuna
+  type: 5
   scaleLV:
-  - {x: 18, y: 18}
-  - {x: 36, y: 36}
-  - {x: 54, y: 54}
-  speed: 1
-  sprite: {fileID: 1149251281, guid: de5ddf1d86d317e499e3f2a615fe768f, type: 3}
-  ani: {fileID: 22100000, guid: 9399bc70c04d83a47823e12d4a36ec48, type: 2}
-  expReward: 6
+  - {x: 2.16, y: 2.16}
+  - {x: 3.5, y: 3.5}
+  - {x: 3.9, y: 3.9}
+  speed: 3
+  sprite: {fileID: 1921547355, guid: 67b224c4fd4ebeb409aec4db088630a5, type: 3}
+  ani: {fileID: 9100000, guid: 242e6464d41bc3149aeb0cb2c2eb8fc3, type: 2}
+  expReward: 3
