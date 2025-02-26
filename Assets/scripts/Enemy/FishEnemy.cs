@@ -124,7 +124,7 @@ public class FishEnemy : Enemy , IMove ,IEat ,IChase , IFlee
         flip();
 
         // ===>dk chuyen sang move<===
-        if (enemyCtrl.focusFish == null && timeDelay <= 0 && enemyNode == targetNode)
+        if (enemyCtrl.focusFish == null )
         {
             timeDelay = 0;
             if (listNode != null) listNode.Clear();
@@ -297,6 +297,13 @@ public class FishEnemy : Enemy , IMove ,IEat ,IChase , IFlee
     }
 
     #endregion
+
+    public override void OnDead()
+    {
+        base.OnDead();
+        GameManager.instance.enemyManager.normalEnemySpawn.
+            addCountEnemyValue((enemyCtrl.info.type,enemyCtrl.info.lv),-1);
+    }
 
     //GIZMOS 
     public override void OnGizmos()

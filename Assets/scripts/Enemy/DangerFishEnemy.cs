@@ -9,14 +9,14 @@ public class DangerFishEnemy : Enemy , IMove
     public DangerFishEnemy(DataFish dataFish, EnemyController enemyCtrl, int idType )
     {
         base.init(dataFish, enemyCtrl, idType);
-        tarGetPos = GameManager.instance.enemyManager.eDangerous.targetPos;
+        tarGetPos = GameManager.instance.enemyManager.dangerousEnemySpawn.targetPos;
         cur_action = move;
     }
 
     public void move()
     {
         if (tarGetPos == null) return;
-        enemyObj.transform.position = Vector2.MoveTowards(enemyObj.transform.position, (Vector2)tarGetPos, speed *10* Time.deltaTime);
+        enemyObj.transform.position = Vector2.MoveTowards(enemyObj.transform.position, (Vector2)tarGetPos, speed *4* Time.deltaTime);
         flip();
         if (Vector2.Distance(enemyObj.transform.position, (Vector2)tarGetPos) <= 0.1f)
         {

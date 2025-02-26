@@ -3307,7 +3307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3649165529875036402}
   m_Layer: 0
-  m_Name: pos2
+  m_Name: posDownLeft
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -4709,7 +4709,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3492630873814905204}
   m_Layer: 0
-  m_Name: pos1
+  m_Name: posTopRight
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -5341,22 +5341,40 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 31c44a4050db4e741b4ca25311d6218b, type: 2}
   parent_Active: {fileID: 2245343612042743726}
   parent_Deactive: {fileID: 3035768685643775444}
-  eNormal:
+  normalEnemySpawn:
     postopright: {fileID: 3492630873814905204}
     posdownleft: {fileID: 3649165529875036402}
     countEnemy: 20
     timeSpawn: 3
-    enemyTypes: 0200000007000000
-    lvs: 00000000
-  eDangerous:
+    enemys:
+    - type: 7
+      lvType: 1
+      percent: 20
+    - type: 7
+      lvType: 2
+      percent: 20
+    - type: 2
+      lvType: 0
+      percent: 20
+    - type: 2
+      lvType: 1
+      percent: 20
+    - type: 6
+      lvType: 0
+      percent: 15
+    - type: 5
+      lvType: 0
+      percent: 5
+  dangerousEnemySpawn:
     posList:
     - {fileID: 824725579}
     - {fileID: 1625445345}
     targetPos: {x: 0, y: 0}
-    rangePosY: 17
-    timeSpawn: 60
-    dangerousType: 0100000004000000
+    rangePosY: 12
+    timeSpawn: 5
+    dangerousType: 01000000
     lv: 0
+    enemyManager: {fileID: 0}
   isGizmos: 1
 --- !u!212 &9059191919559039071
 SpriteRenderer:

@@ -20,5 +20,5 @@ MonoBehaviour:
   - {x: 3.6, y: 3.6}
   speed: 2
   sprite: {fileID: 201549374, guid: 5581ae677e53ffa498c6b11b43108be5, type: 3}
-  ani: {fileID: 9100000, guid: 572af653aaaf658409af9b53094f85c2, type: 2}
+  ani: {fileID: 22100000, guid: 3e7b11d658e1bf343bd0bb64cfe2ef3a, type: 2}
   expReward: 2

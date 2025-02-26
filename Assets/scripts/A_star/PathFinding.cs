@@ -10,7 +10,7 @@ public class PathFinding
     Node[,] grids;
     public List<Node> findPath(Node startNode, Node targetNode)
     {
-        if(startNode == targetNode) return null;
+        if (startNode == targetNode) return new List<Node>() ;
         Node[,] grids = GridManager.grids;
         openSet = new List<Node>();
         closeSet = new List<Node>();

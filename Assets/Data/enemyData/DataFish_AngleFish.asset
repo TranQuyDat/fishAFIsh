@@ -17,7 +17,7 @@ MonoBehaviour:
   scaleLV:
   - {x: 0.6, y: 0.6}
   - {x: 0.9, y: 0.9}
-  - {x: 1.2, y: 1}
+  - {x: 1.2, y: 1.2}
   speed: 1
   sprite: {fileID: 1149251281, guid: de5ddf1d86d317e499e3f2a615fe768f, type: 3}
   ani: {fileID: 22100000, guid: cef6872fe7f05d847905184d6dc9a85e, type: 2}

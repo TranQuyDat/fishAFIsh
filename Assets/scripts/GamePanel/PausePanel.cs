@@ -12,12 +12,12 @@ public class PausePanel : IState
     GameManager gameManager;
     public PausePanel() 
     {
-        gameManager = GameManager.instance;
-        this.uiGame = gameManager.uiGame; ;
+        this.uiGame = GameManager.instance.uiGame; ;
         this.oldPosSelectMap = uiGame.ui_selectMap.anchoredPosition;
     }
     public void Enter()
     {
+        gameManager = GameManager.instance;
         uiGame.panelType = PanelType.pause;
         uiGame.ui_PausePanel.SetActive(true);
         gameManager.statGame.isStart = false;
