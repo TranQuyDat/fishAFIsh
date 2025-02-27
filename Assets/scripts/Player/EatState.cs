@@ -33,10 +33,12 @@ public class EatState : IState
         {
            EnemyController enemyCtrl = player.food.GetComponent<EnemyController>();
             enemyCtrl.ondead();
+
+            SoundManager.Instance.PlaySFX(SFXType.Eat);
             float exp = enemyCtrl.enemyscript._dataFish.expReward * 
                 (enemyCtrl.transform.localScale.y / player.transform.localScale.y);
             player.addExp(exp);
-            player.addScore(enemyCtrl.transform);
+            player.addScore(enemyCtrl);
         }
 
     }

@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Angle fish
   type: 3
+  radiusHead: 0.12
   scaleLV:
   - {x: 0.6, y: 0.6}
   - {x: 0.9, y: 0.9}

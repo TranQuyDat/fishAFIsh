@@ -83,7 +83,6 @@ public class NormalEnemySpawn : IEnemySpawn
         foreach (EnemyValue enemy in validEnemys)
         {
             w = (w + enemy.percent);
-                Debug.Log(ranId);
             if (ranId < w)
             {
                 return enemy;

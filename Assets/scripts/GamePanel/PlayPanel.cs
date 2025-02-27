@@ -6,6 +6,7 @@ public class PlayPanel : IState
 {
     public Uigame uiGame;
     GameManager gameManager;
+    float curscore = 0;
     public PlayPanel() 
     {
         gameManager = GameManager.instance;
@@ -19,6 +20,7 @@ public class PlayPanel : IState
 
     public void Execute()
     {
+        updateScore();
         //dk chuyen sang pause
         if (Input.GetKeyDown(KeyCode.Escape) || gameManager.getBtnClked() == ButtonTyle.pause )
         {
@@ -34,6 +36,13 @@ public class PlayPanel : IState
         {
             gameManager.stateManager.changeState(new LosePanel() );
         }
+    }
+
+    public void updateScore()
+    {
+        if (curscore == gameManager.playerCtrl.score) return;
+        uiGame.txt_score.text = ""+ gameManager.playerCtrl.score;
+        curscore = gameManager.playerCtrl.score;
     }
 
     public void Exit()

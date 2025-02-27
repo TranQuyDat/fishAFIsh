@@ -27,14 +27,14 @@ public class EnemyController : MonoBehaviour
     public infoEnemy info;
     public ActionType actionType;
     public Collider2D focusFish;
-    public Transform PosCheckEnemy;
     public float radiusToEat;
     public LayerMask layerEnemy;
     public float radiusScanEnemy;
     public Animator ani;
-    public Enemy enemyscript ;
+    public Enemy enemyscript;
 
-
+    public SpriteRenderer sr;
+    public CircleCollider2D cirCollider;
     Collider2D[] otherFishs;
 
     void Start()
@@ -44,8 +44,15 @@ public class EnemyController : MonoBehaviour
             initData(info);
             info.canInit = false;
         }
-    }
 
+    }
+    private void OnEnable()
+    {
+
+
+        float maxSize = Mathf.Max(sr.bounds.size.x, sr.bounds.size.y);
+        cirCollider.radius = maxSize/2;
+    }
     public void initData(infoEnemy info)
     {
         DataFish dataFish = GameManager.instance.enemyManager.getData(info.type);
@@ -66,7 +73,7 @@ public class EnemyController : MonoBehaviour
 
 
         this.radiusScanEnemy = 2.13f * scale ;
-        radiusToEat = 0.2f * scale;
+        radiusToEat = dataFish.radiusHead * scale;
 
 
     }
@@ -75,7 +82,7 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         if (enemyscript == null) return;
-        otherFishs = Physics2D.OverlapCircleAll(PosCheckEnemy.position, radiusScanEnemy, layerEnemy);
+        otherFishs = Physics2D.OverlapCircleAll(transform.position, radiusScanEnemy, layerEnemy);
         checkFocusFish();
         enemyscript.starAction();
         info.speed = enemyscript.speed;
@@ -134,7 +141,7 @@ public class EnemyController : MonoBehaviour
         if (!isGizmos) return;
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(PosCheckEnemy.position, radiusToEat);
+        Gizmos.DrawWireSphere(transform.position, radiusToEat);
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, radiusScanEnemy);

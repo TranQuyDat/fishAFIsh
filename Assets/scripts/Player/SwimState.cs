@@ -27,6 +27,7 @@ public class SwimState : IState
     {
         player.actionType = ActionType.swim;
         ani.SetBool("isSwim",true);
+
     }
 
     public void Execute()

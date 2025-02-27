@@ -137,7 +137,7 @@ public class FishEnemy : Enemy , IMove ,IEat ,IChase , IFlee
         if (enemyCtrl.focusFish == null) return;
 
         // get dis to focusFish
-        float dis = (enemyCtrl.PosCheckEnemy.position - enemyCtrl.focusFish.transform.position).magnitude;
+        float dis = (enemyCtrl.transform.position - enemyCtrl.focusFish.transform.position).magnitude;
 
         // ===>dk chuyen sang eat<===
         if (dis <= enemyCtrl.radiusToEat)
@@ -158,7 +158,7 @@ public class FishEnemy : Enemy , IMove ,IEat ,IChase , IFlee
         // ===>dk chuyen sang move<===
         bool isToSwim = enemyCtrl.focusFish != null
             && (
-            (enemyCtrl.PosCheckEnemy.position - enemyCtrl.focusFish.transform.position).magnitude > enemyCtrl.radiusToEat
+            (enemyCtrl.transform.position - enemyCtrl.focusFish.transform.position).magnitude > enemyCtrl.radiusToEat
             ||
             enemyCtrl.focusFish.transform.localScale.y > enemyObj.transform.localScale.y
             );
@@ -279,7 +279,7 @@ public class FishEnemy : Enemy , IMove ,IEat ,IChase , IFlee
     public Node changePos()
     {
         List<Node> nodes = new List<Node>();
-        float dis = Vector2.Distance(enemyObj.transform.position, enemyCtrl.PosCheckEnemy.position);
+        float dis = Vector2.Distance(enemyObj.transform.position, enemyCtrl.transform.position);
         foreach (Node n in GridManager.grids)
         {
             if (Vector2.Distance(enemyObj.transform.position, n.pos) <= dis

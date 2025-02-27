@@ -47,7 +47,7 @@ public class WinPanel : IState
     {
         int countStar=0;
         if (gameManager.playerCtrl.score < 100) countStar = 1;
-        else if (gameManager.playerCtrl.score >= 100) countStar = 2;
+        else if (gameManager.playerCtrl.score < 150) countStar = 2;
         else if (gameManager.playerCtrl.score >=150) countStar = 3;
 
         for(int i =0;i < gameManager.uiGame.stars.Length ;i++)

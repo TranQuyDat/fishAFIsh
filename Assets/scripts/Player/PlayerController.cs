@@ -34,7 +34,7 @@ public class Level
         obj.localScale = playerCtrl.data.scaleLV[newlv]*GameManager.instance.setting.mapScale;
 
         //neu lv up thi update head radius
-        playerCtrl.headRadius = playerCtrl.baseHeadRadius * obj.localScale.y;
+        playerCtrl.headRadius = playerCtrl.data.radiusHead * obj.localScale.y;
         playerCtrl.speed += newlv;
 
     }
@@ -54,11 +54,9 @@ public class PlayerController : MonoBehaviour
     public ActionType actionType;
     [Header("Interaction settings")]
     public Vector2 cursorPos;
-    public Transform headPos;
     public float headRadius;
     public LayerMask layerFood;
     public Collider2D food;
-    [HideInInspector] public float baseHeadRadius;
     public float score { get;private set;}
 
 
@@ -67,20 +65,20 @@ public class PlayerController : MonoBehaviour
     int comboCount = 0;
     float comboTime = 2f;
     float resetComboTime = 2f;
+    bool isUnderSurfacewater = false;
     void Start()
     {
         init();
         stateManager = new StateManager();
         stateManager.changeState(new SwimState(rb, this));
         GameManager.instance.uiGame.img_Avt.sprite = spriteRenderer.sprite;
-        baseHeadRadius = headRadius;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (!GameManager.instance.statGame.isStart) return;
-        food = Physics2D.OverlapCircle(headPos.position,headRadius, layerFood);
+        food = Physics2D.OverlapCircle(transform.position,headRadius, layerFood);
 
         stateManager.excute();
         if(comboTime > 0)
@@ -90,16 +88,22 @@ public class PlayerController : MonoBehaviour
         }
 
         //tren mat nuoc
-        if (isUpSurFaceWater())
+        if (isUpSurFaceWater() && isUnderSurfacewater)
         {
             rb.drag = 0f;
             rb.angularDrag = 0f;
+
+            SoundManager.Instance.PlayBGM(BGMType.UpSurFaceWater);
+            isUnderSurfacewater = false;
         }
         //duoi mat nuoc
-        else
+        else if(!isUpSurFaceWater() && !isUnderSurfacewater) 
         {
             rb.drag = waterDrag;
             rb.angularDrag = waterDrag;
+            isUnderSurfacewater = true;
+
+            SoundManager.Instance.PlayBGM(BGMType.UnderSurFaceWater);
         }
 
         flip(transform.position);
@@ -111,6 +115,7 @@ public class PlayerController : MonoBehaviour
         spriteRenderer.sprite = data.sprite;
         ani.runtimeAnimatorController = data.ani;
         transform.localScale = data.scaleLV[0]*GameManager.instance.setting.mapScale;
+        headRadius = data.radiusHead * transform.localScale.y;
     }
 
     public void changeState(IState state)
@@ -130,9 +135,10 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    public void addScore(Transform enemy)
+    public void addScore(EnemyController enemy)
     {
-        float baseScore = 5 * (enemy.localScale.y/transform.localScale.y);
+        float baseScore = 5 * (enemy.transform.localScale.y/transform.localScale.y) 
+            * enemy.enemyscript._dataFish.expReward;
 
         comboCount++;
         comboTime = resetComboTime;
@@ -191,7 +197,7 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(headPos.position, headRadius);
+        Gizmos.DrawWireSphere(transform.position, headRadius);
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(this.transform.position, cursorPos);
 

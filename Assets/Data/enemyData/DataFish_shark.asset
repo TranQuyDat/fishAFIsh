@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Shark
   type: 4
+  radiusHead: 0.16
   scaleLV:
   - {x: 4, y: 4}
   - {x: 8, y: 8}

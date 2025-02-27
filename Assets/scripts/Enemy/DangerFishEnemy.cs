@@ -27,7 +27,7 @@ public class DangerFishEnemy : Enemy , IMove
         if (enemyCtrl.focusFish == null) return;
 
         // get dis to focusFish
-        float dis = (enemyCtrl.PosCheckEnemy.position - enemyCtrl.focusFish.transform.position).magnitude;
+        float dis = (enemyCtrl.transform.position - enemyCtrl.focusFish.transform.position).magnitude;
 
         if (dis <= enemyCtrl.radiusToEat)
         {
@@ -50,7 +50,7 @@ public class DangerFishEnemy : Enemy , IMove
                 enemyCtrl.focusFish != null
             && 
             (
-                (enemyCtrl.PosCheckEnemy.position - enemyCtrl.focusFish.transform.position).magnitude 
+                (enemyCtrl.transform.position - enemyCtrl.focusFish.transform.position).magnitude 
                 > enemyCtrl.radiusToEat
             ||
                 enemyCtrl.focusFish.transform.localScale.y > enemyObj.transform.localScale.y

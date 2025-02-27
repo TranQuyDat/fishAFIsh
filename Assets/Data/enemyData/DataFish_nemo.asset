@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Nemo
   type: 2
+  radiusHead: 0.17
   scaleLV:
   - {x: 0.5, y: 0.5}
   - {x: 0.75, y: 0.75}

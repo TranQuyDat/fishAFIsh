@@ -20,6 +20,7 @@ public class Uigame
     public GameObject ui_PlayPanel;
     public Slider slider_Evolution;
     public Image img_Avt;
+    public TextMeshProUGUI txt_score;
     [Header("Pause")]
     public GameObject ui_PausePanel;
     public Slider slider_Music;
@@ -72,6 +73,7 @@ public class GameManager : MonoBehaviour
     {
         stateManager = new StateManager();
         stateManager.changeState(new PausePanel());
+        SoundManager.Instance.PlayBGM(BGMType.UpSurFaceWater);
     }
     private void Update()
     {
@@ -81,6 +83,8 @@ public class GameManager : MonoBehaviour
     {
         btnClicked = (ButtonTyle)id;
         displayBtnClked = btnClicked;
+        if(id ==0) return;
+        SoundManager.Instance.PlaySFX(SFXType.Click);
     }
 
     public ButtonTyle getBtnClked()

@@ -12,17 +12,22 @@ public class CameraController : MonoBehaviour
     Vector3 nextPos;
 
     private Camera cam;
+    public Vector2 posFollow;
     Rect rect;
     private void Awake()
     {
         cam = Camera.main;
         player = FindAnyObjectByType<PlayerController>();
-
-        rect = new Rect(player.transform.position, sizefolow);
+        posFollow = new Vector2(player.transform.position.x, player.transform.position.y+
+            (player.transform.localScale.y/2));
+        rect = new Rect(posFollow, sizefolow);
     }
     private void Update()
     {
-        rect.position = player.transform.position;
+        posFollow = new Vector2(player.transform.position.x, player.transform.position.y +
+            (player.transform.localScale.y / 2));
+        rect.position = posFollow;
+
         if (rect.Contains(camPos)) return;
         flowTarger(player.transform);
     }
@@ -57,7 +62,7 @@ public class CameraController : MonoBehaviour
         if (!enGizmos) return;
         Gizmos.color = Color.red;
         if (camPos == null) return;
-        Gizmos.DrawWireCube(player.transform.position, sizefolow);
+        Gizmos.DrawWireCube(posFollow, sizefolow);
         if (centerLimit == null) return;
         Gizmos.DrawWireCube(centerLimit.position, sizeLimit);
     }
