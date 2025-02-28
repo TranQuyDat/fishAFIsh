@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour
             SoundManager.Instance.PlayBGM(BGMType.UnderSurFaceWater);
         }
 
-        flip(transform.position);
+        flip(spriteRenderer.bounds.center);
     }
 
     public void init()
@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
         float max_value = GameManager.instance.uiGame.slider_Evolution.maxValue;
 
         GameManager.instance.uiGame.slider_Evolution.value += 
-            (exp * (max_value/3)/lv.exp_MaxExp.y);
+            ((exp / lv.exp_MaxExp.y) * (max_value/3));
         
         // reward exp
         lv.addExp(exp, this.transform);
@@ -152,7 +152,7 @@ public class PlayerController : MonoBehaviour
         if (diffx == 0 || diffx * transform.localScale.x > 0) return;
         
         Vector3 scale = this.transform.localScale;
-
+        Vector3 oldCentre = spriteRenderer.bounds.center;
         if(cursorPos.x > playerPos.x)
         {
             // sang phai
@@ -165,6 +165,10 @@ public class PlayerController : MonoBehaviour
             scale.x = -1* math.abs(scale.x);
             this.transform.localScale = scale;
         }
+
+        Vector3 newCentre = spriteRenderer.bounds.center;
+
+        transform.position += oldCentre - newCentre;
     }
 
     public bool isUpSurFaceWater()

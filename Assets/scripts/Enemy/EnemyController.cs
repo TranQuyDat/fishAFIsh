@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
@@ -46,13 +46,6 @@ public class EnemyController : MonoBehaviour
         }
 
     }
-    private void OnEnable()
-    {
-
-
-        float maxSize = Mathf.Max(sr.bounds.size.x, sr.bounds.size.y);
-        cirCollider.radius = maxSize/2;
-    }
     public void initData(infoEnemy info)
     {
         DataFish dataFish = GameManager.instance.enemyManager.getData(info.type);
@@ -63,6 +56,11 @@ public class EnemyController : MonoBehaviour
         this.info =info;
 
         this.GetComponent<SpriteRenderer>().sprite = dataFish.sprite;
+
+        float maxSize = Mathf.Max(sr.localBounds.size.x, sr.localBounds.size.y);
+        cirCollider.radius = maxSize / 2;
+        cirCollider.offset = sr.localBounds.center;
+
         ani.runtimeAnimatorController = dataFish.ani;
 
         float mapScale = GameManager.instance.setting.mapScale;
@@ -96,26 +94,29 @@ public class EnemyController : MonoBehaviour
         {
             focusFish = null;
         }
-        if (focusFish != null && otherFishs.Length==1) return;
-        float dis = radiusScanEnemy+1;
-        Collider2D col = null;
-        foreach (Collider2D c in otherFishs)
+
+        if (focusFish != null && otherFishs.Length == 2) return;
+        float dis = (radiusScanEnemy* radiusScanEnemy) +1;
+        for (int i = 0; i< otherFishs.Length;i++)
         {
-            if (dis < Vector2.Distance(c.transform.position, transform.position)) 
+            float dis2otherfish = (otherFishs[i].transform.position - transform.position).sqrMagnitude;
+
+            if (dis < dis2otherfish || otherFishs[i].gameObject == this.gameObject) 
                 continue;
-            col = c;
+
+
+            if (otherFishs[i].CompareTag("Player"))
+            {
+                focusFish = otherFishs[i];
+                dis = dis2otherfish;
+                continue;
+            }
+
+            EnemyController eCtrl = otherFishs[i].GetComponent<EnemyController>();
+            if (eCtrl.info.type == this.info.type) continue;
+            focusFish = otherFishs[i];
+            dis = dis2otherfish;
         }
-        if (col == null) return;
-        if (col.CompareTag("Player"))
-        {
-            focusFish = col;
-            return;
-        }
-                
-        EnemyController eCtrl = col.GetComponent<EnemyController>();
-        if (eCtrl.info.type == this.info.type) return ;
-            focusFish = col;
-            return;
     }
 
     public Collider2D[] getOtherFish()

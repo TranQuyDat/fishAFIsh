@@ -20,6 +20,6 @@ MonoBehaviour:
   - {x: 8, y: 8}
   - {x: 12, y: 12}
   speed: 4
-  sprite: {fileID: 1149251281, guid: de5ddf1d86d317e499e3f2a615fe768f, type: 3}
+  sprite: {fileID: 1983416054, guid: b911a8032aaa963419823185f746b189, type: 3}
   ani: {fileID: 22100000, guid: c4a35219a7b92cb40819c67ca778f326, type: 2}
   expReward: 4

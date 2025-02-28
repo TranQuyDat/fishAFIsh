@@ -100,6 +100,7 @@ public class SoundManager : MonoBehaviour
     }
     private void initSoundValues()
     {
+        datagame.load();
         gameManager.uiGame.slider_Music.value = datagame.musicBGVolume;
         gameManager.uiGame.slider_Sound.value = datagame.soundFXVolume;
 
@@ -119,6 +120,7 @@ public class SoundManager : MonoBehaviour
             datagame.musicBGVolume = gameManager.uiGame.slider_Music.value;
             SetBGMVolume(gameManager.uiGame.slider_Music.value);
         }
+        datagame.save();
     }
 
     public void PlayBGM(BGMType type)

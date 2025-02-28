@@ -32,7 +32,7 @@ Material:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 13
     - _Distortion: 3.69
-    - _alpha: 3
+    - _alpha: 4.92
     - _speeWave: 0.05
     m_Colors:
     - _Scale: {r: 1, g: 1, b: 0.45, a: 0}

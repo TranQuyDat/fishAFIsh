@@ -29,13 +29,13 @@ public class CameraController : MonoBehaviour
         rect.position = posFollow;
 
         if (rect.Contains(camPos)) return;
-        flowTarger(player.transform);
+        flowTarger(posFollow);
     }
 
-    public void flowTarger(Transform target)
+    public void flowTarger(Vector3 targetPos)
     {
         camPos = transform.position;
-        Vector3 dir = (target.position - camPos).normalized;
+        Vector3 dir = (targetPos - camPos).normalized;
         nextPos = transform.position + dir * speed * Time.deltaTime;
         nextPos.z = transform.position.z;
 

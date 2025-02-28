@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -32,7 +32,6 @@ public class DangerFishEnemy : Enemy , IMove
         if (dis <= enemyCtrl.radiusToEat)
         {
             enemyCtrl.actionType = ActionType.eat;
-
             enemyCtrl.ani.SetBool("isEat", true);
             enemyCtrl.ani.SetBool("isSwim", false);
             cur_action = eat;

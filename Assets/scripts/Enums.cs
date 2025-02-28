@@ -19,3 +19,8 @@ public enum LevelType
 public enum SceneType {map1,map2,map3}
 public enum ButtonTyle { none = 0, resume = 1 , nextMap = 2 , pause =3
         , restart = 4 , quit = 5 , selectMap = 6 , openSelectMap = 7 , arowLeft = 8 , arowRight = 9 ,  }
+
+public enum KeySave
+{
+    bgm,sfx
+}
