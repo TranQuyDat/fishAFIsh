@@ -18,7 +18,7 @@ public class JumpState : IState
     {
 
         player.actionType = ActionType.jump;
-        SoundManager.Instance.PlaySFX(SFXType.Jump);
+        SoundManager.Instance.PlaySFX(SFXType.Jump,player.transform.position);
         //hd jump
         Vector2 dir = (Vector2.up + Vector2.right * rb.transform.localScale.x).normalized ;
         rb.AddForce(dir*force, ForceMode2D.Impulse);

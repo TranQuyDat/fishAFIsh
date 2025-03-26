@@ -133,7 +133,7 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlaySFX(SFXType type)
+    public void PlaySFX(SFXType type,Vector3 pos)
     {
         if (sfxClips.TryGetValue(type, out AudioClip clip))
         {
@@ -143,6 +143,8 @@ public class SoundManager : MonoBehaviour
                 sfxSource.clip = clip;
                 sfxSource.transform.parent = fxActive;
                 sfxSource.gameObject.SetActive(true);
+                pos.z = -10f;
+                sfxSource.transform.position = pos;
                 sfxSource.Play();
                 Invoke(nameof(ReturnToPool), clip.length);
             }

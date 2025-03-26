@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
         btnClicked = (ButtonTyle)id;
         displayBtnClked = btnClicked;
         if(id ==0) return;
-        SoundManager.Instance.PlaySFX(SFXType.Click);
+        SoundManager.Instance.PlaySFX(SFXType.Click,Camera.main.transform.position);
     }
 
     public ButtonTyle getBtnClked()

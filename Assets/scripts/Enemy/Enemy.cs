@@ -35,11 +35,12 @@ public abstract class Enemy : IEat
         if (enemyCtrl.focusFish == null) return;
         if (enemyCtrl.focusFish.gameObject.CompareTag("Player"))
         {
-            SoundManager.Instance.PlaySFX(SFXType.Eat);
+            SoundManager.Instance.PlaySFX(SFXType.Eat,enemyObj.transform.position);
             enemyCtrl.focusFish.GetComponent<PlayerController>().ondead();
             return;
         }
 
+        SoundManager.Instance.PlaySFX(SFXType.Eat, enemyObj.transform.position);
         enemyCtrl.focusFish.GetComponent<EnemyController>().ondead();
     }
 
